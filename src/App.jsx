@@ -21,7 +21,7 @@ const VERB_BE_QUESTIONS = [
 ];
 
 const PRONOUN_QUESTIONS = [
-  { sentence: "___ are friends.", answer: "They", options: ["You", "We", "They"], hint: "👨‍👩‍👦 3 friends (not you!)", emoji: "👨‍👩‍👦" },
+  { sentence: "___ are friends.", answer: "They", options: ["You", "We", "They"], hint: "👨‍👩‍👦 3 friends (not you!)", emoji: "👉👬" },
   { sentence: "___ am happy today. It's my birthday!", answer: "I", options: ["You", "He", "I"], hint: "🙋 pointing to yourself", emoji: "🎂" },
   { sentence: "___ are italian.", answer: "You", options: ["She", "You", "I"], hint: "👉 one person talking to another", emoji: "🇮🇹" },
   { sentence: "___ are brothers.", answer: "They", options: ["You", "He", "They"], hint: "👬 pointing at 2 other boys", emoji: "👉👬" },
