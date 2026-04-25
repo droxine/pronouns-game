@@ -148,6 +148,23 @@ export const TURNIP_SECTIONS = [
         ],
       },
       {
+        id: "seed-phrases",
+        title: "Phrases",
+        emoji: "💬",
+        description: "Practice useful chunks from this part.",
+        questions: [
+          phrase("tiene un jardín grande", "has got a big garden", ["has got a big garden", "goes to bed", "comes out of the earth"]),
+          phrase("hay flores", "there are flowers", ["there are flowers", "there are dogs", "there are clouds"]),
+          phrase("debajo de los árboles", "under the trees", ["into the house", "under the trees", "out of the earth"]),
+          phrase("una semilla pequeña de nabo", "a small turnip seed", ["a big apple tree", "a small turnip seed", "a little white mouse"]),
+          phrase("pone la semilla en la tierra", "puts the seed into the earth", ["pulls the turnip", "puts the seed into the earth", "cooks the turnip"]),
+          phrase("se va a la cama", "goes to bed", ["goes to bed", "calls his wife", "looks at the mouse"]),
+          phrase("en la noche", "in the night", ["in the morning", "in the night", "in the house"]),
+          phrase("crece y crece", "grows and grows", ["pulls and pulls", "grows and grows", "cooks and eats"]),
+          phrase("¡qué nabo enorme!", "What an enormous turnip!", ["What an enormous turnip!", "Come and help me!", "This turnip is delicious!"]),
+        ],
+      },
+      {
         id: "seed-build",
         title: "Build a Sentence",
         emoji: "🧩",
@@ -214,6 +231,23 @@ export const TURNIP_SECTIONS = [
         ],
       },
       {
+        id: "pull-phrases",
+        title: "Phrases",
+        emoji: "💬",
+        description: "Practice useful chunks from this part.",
+        questions: [
+          phrase("no pasa nada", "nothing happens", ["nothing happens", "everyone eats", "the sun comes out"]),
+          phrase("el nabo es demasiado grande", "The turnip is too big!", ["The turnip is too big!", "The seed is too small!", "The garden is too big!"]),
+          phrase("ven aquí", "Come here", ["Go away", "Come here", "Go to bed"]),
+          phrase("ven y ayúdame", "Come and help me.", ["Come and help me.", "Come and cook me.", "Come and eat me."]),
+          phrase("ven y ayúdanos", "Come and help us.", ["Come and help us.", "Come and pull me.", "Come and sleep."]),
+          phrase("jalan y jalan", "pull and pull", ["grow and grow", "pull and pull", "cook and cook"]),
+          phrase("debajo del árbol de manzana", "under the apple tree", ["behind the hill", "under the apple tree", "into the house"]),
+          phrase("el ratoncito blanco", "the little white mouse", ["the little white mouse", "the big grey cloud", "the enormous turnip"]),
+          phrase("sale de la tierra", "comes out of the earth", ["goes into the house", "comes out of the earth", "goes to bed"]),
+        ],
+      },
+      {
         id: "pull-build",
         title: "Build a Sentence",
         emoji: "🧩",
@@ -276,6 +310,20 @@ export const TURNIP_SECTIONS = [
         ],
       },
       {
+        id: "eat-phrases",
+        title: "Phrases",
+        emoji: "💬",
+        description: "Practice useful chunks from this part.",
+        questions: [
+          phrase("ven y ayúdame a cocinar", "Come and help me cook", ["Come and help me cook", "Come and help me pull", "Come and help me sleep"]),
+          phrase("este nabo maravilloso y enorme", "this wonderful, enormous turnip", ["this little white mouse", "this wonderful, enormous turnip", "this big apple tree"]),
+          phrase("entra a la casa", "goes into the house", ["goes into the house", "comes out of the earth", "goes to bed"]),
+          phrase("ayudan a cocinar el nabo", "help cook the turnip", ["help pull the turnip", "help cook the turnip", "help plant the seed"]),
+          phrase("comen el nabo enorme", "eat the enormous turnip", ["eat the enormous turnip", "cook the small seed", "pull the apple tree"]),
+          phrase("este nabo está delicioso", "This turnip is delicious!", ["This turnip is delicious!", "This turnip is too big!", "This seed is small!"]),
+        ],
+      },
+      {
         id: "eat-build",
         title: "Build a Sentence",
         emoji: "🧩",
@@ -316,6 +364,10 @@ function picture(fallbackPicture, answer, options) {
 
 function build(words, answer) {
   return { type: "build", prompt: "Put the words in order.", words, answer };
+}
+
+function phrase(spanish, answer, options) {
+  return { type: "choice", prompt: `Tap the English phrase for "${spanish}".`, question: "Choose the phrase.", answer, options };
 }
 
 function imageName(answer) {
