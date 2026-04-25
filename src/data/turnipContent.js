@@ -80,6 +80,19 @@ export const TURNIP_SECTIONS = [
           picture("⬇️", "under", ["under", "big", "help"]),
         ],
       },
+      {
+        id: "too-big-small",
+        title: "Big or Small?",
+        emoji: "📏",
+        description: "Look at the picture and choose the sentence.",
+        questions: [
+          sizePicture(1, "It’s too big!"),
+          sizePicture(2, "It’s too small!"),
+          sizePicture(3, "It’s too big!"),
+          sizePicture(4, "It’s too small!"),
+          sizePicture(5, "It’s too big!")
+        ],
+      },
     ],
   },
   {
@@ -307,4 +320,16 @@ function build(words, answer) {
 
 function imageName(answer) {
   return answer.toLowerCase().replace(/\s*\/\s*/g, "-").replace(/\s+/g, "-");
+}
+
+function sizePicture(number, answer) {
+  return {
+    type: "picture",
+    prompt: "Look at the picture. Choose the sentence.",
+    fallbackPicture: answer === "It’s too big!" ? "🗻" : "🤏",
+    fastImage: `turnip-images/fast/too-big-small-${number}.jpg`,
+    image: `turnip-images/too-big-small-${number}.png`,
+    answer,
+    options: ["It’s too big!", "It’s too small!"],
+  };
 }
