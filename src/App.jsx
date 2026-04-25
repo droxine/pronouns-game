@@ -19,10 +19,12 @@ import { buildQuestions, pick, shuffle, starsFor } from "./utils/gameUtils";
 import "./styles/game.css";
 
 const SCREENS = {
+  TREE: "tree",
   HOME: "home",
   GAME: "game",
   REVIEW: "review",
   FINAL: "final",
+  TURNIP: "turnip",
 };
 
 const MODES = {
@@ -31,7 +33,7 @@ const MODES = {
 };
 
 export default function App() {
-  const [screen, setScreen] = useState(SCREENS.HOME);
+  const [screen, setScreen] = useState(SCREENS.TREE);
   const [mode, setMode] = useState(MODES.ALL);
   const [levelIdx, setLevelIdx] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -57,6 +59,7 @@ export default function App() {
   const question = questions[questionIdx] ?? null;
   const answeredCurrentQuestion = Boolean(feedback || wordOrderChecked);
   const progress = questions.length ? ((questionIdx + (answeredCurrentQuestion ? 1 : 0)) / questions.length) * 100 : 0;
+  const showSidePanel = ![SCREENS.TREE, SCREENS.TURNIP].includes(screen);
 
   function launchLevel(nextLevelIdx, gameMode = MODES.SINGLE) {
     const nextLevel = LEVELS[nextLevelIdx];
@@ -200,11 +203,27 @@ export default function App() {
   }
 
   return (
-    <div className="app-root">
+    <div className={`app-root${showSidePanel ? "" : " app-root-map"}`}>
       {confetti && <Confetti />}
-      <SidePanel mascot={mascot} />
+      {showSidePanel && <SidePanel mascot={mascot} />}
 
-      <div className="game-col">
+      <div className={`game-col${showSidePanel ? "" : " tree-col"}`}>
+        {screen === SCREENS.TREE && (
+          <LearningTreeScreen
+            completed={completed}
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onOpenPronouns={() => {
+              sfx.tap();
+              setScreen(SCREENS.HOME);
+            }}
+            onOpenTurnip={() => {
+              sfx.tap();
+              setScreen(SCREENS.TURNIP);
+            }}
+          />
+        )}
+
         {screen === SCREENS.HOME && (
           <HomeScreen
             mascot={mascot}
@@ -212,6 +231,7 @@ export default function App() {
             activeMascot={activeMascot}
             muted={muted}
             onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
             onStartAll={() => {
               sfx.tap();
               startAllLevels();
@@ -282,8 +302,79 @@ export default function App() {
             }}
           />
         )}
+
+        {screen === SCREENS.TURNIP && (
+          <TurnipTopicScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+          />
+        )}
       </div>
     </div>
+  );
+}
+
+function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, onOpenTurnip }) {
+  const pronounStars = completed.size * 3;
+
+  return (
+    <>
+      <div className="topbar tree-topbar">
+        <span className="topbar-logo">🌟 Study Quest</span>
+        <div className="topbar-icons">
+          <button className="icon-btn" onClick={onToggleMute}>
+            {muted ? "🔇" : "🔊"}
+          </button>
+        </div>
+      </div>
+
+      <div className="scroll tree-scroll">
+        <div className="tree-header">
+          <div className="tree-kicker">English path</div>
+          <h1>Choose a topic</h1>
+          <p>Practice one skill at a time and unlock more activities as the project grows.</p>
+        </div>
+
+        <div className="topic-path">
+          <TopicNode
+            icon="🌟"
+            title="Personal Pronouns"
+            subtitle="I, you, he, she, it, we, they"
+            meta={`${completed.size} / ${LEVELS.length} levels done · ${pronounStars} stars`}
+            status="Ready"
+            tone="green"
+            onClick={onOpenPronouns}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="📖"
+            title="The Enormous Turnip"
+            subtitle="Story vocabulary and comprehension"
+            meta="Levels waiting for content"
+            status="Coming soon"
+            tone="blue"
+            onClick={onOpenTurnip}
+          />
+        </div>
+      </div>
+    </>
+  );
+}
+
+function TopicNode({ icon, title, subtitle, meta, status, tone, onClick }) {
+  return (
+    <button className={`topic-node ${tone}`} onClick={onClick}>
+      <span className="topic-icon">{icon}</span>
+      <span className="topic-copy">
+        <span className="topic-title">{title}</span>
+        <span className="topic-subtitle">{subtitle}</span>
+        <span className="topic-meta">{meta}</span>
+      </span>
+      <span className="topic-status">{status}</span>
+    </button>
   );
 }
 
@@ -293,6 +384,7 @@ function HomeScreen({
   activeMascot,
   muted,
   onToggleMute,
+  onBackToTree,
   onStartAll,
   onChooseLevel,
   onChooseMascot,
@@ -300,6 +392,9 @@ function HomeScreen({
   return (
     <>
       <div className="topbar">
+        <button className="icon-btn" onClick={onBackToTree}>
+          ← Tree
+        </button>
         <span className="topbar-logo">🌟 Pronoun Quest!</span>
         <div className="topbar-icons">
           <button className="icon-btn" onClick={onToggleMute}>
@@ -337,6 +432,49 @@ function HomeScreen({
           activeMascot={activeMascot}
           onChooseMascot={onChooseMascot}
         />
+      </div>
+    </>
+  );
+}
+
+function TurnipTopicScreen({ muted, onToggleMute, onBackToTree }) {
+  return (
+    <>
+      <div className="topbar">
+        <button className="icon-btn" onClick={onBackToTree}>
+          ← Tree
+        </button>
+        <span className="topbar-logo turnip-logo">📖 The Enormous Turnip</span>
+        <div className="topbar-icons">
+          <button className="icon-btn" onClick={onToggleMute}>
+            {muted ? "🔇" : "🔊"}
+          </button>
+        </div>
+      </div>
+
+      <div className="scroll">
+        <div className="home-hero turnip-hero">
+          <span className="mascot-display">📖</span>
+          <div className="speech-bubble">Story practice will live here soon.</div>
+          <div className="home-title turnip-title">The Enormous Turnip</div>
+          <div className="home-sub">Vocabulary · Reading · Story order</div>
+        </div>
+
+        <div className="divider">levels coming soon</div>
+
+        {["Vocabulary", "Who is in the story?", "Story order"].map((title, index) => (
+          <div key={title} className="level-card coming-soon-card">
+            <div className="lc-icon">{["🌱", "👨‍🌾", "📚"][index]}</div>
+            <div className="lc-info">
+              <div className="lc-name turnip-level-name">Level {index + 1} · {title}</div>
+              <div className="lc-desc">Content will be added next.</div>
+            </div>
+            <div className="lc-right">
+              <div className="lc-stars">☆☆☆</div>
+              <div className="locked-icon">🔒</div>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
