@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CORRECT_MESSAGES, TRY_AGAIN_MESSAGES } from "../data/gameContent";
 import { TURNIP_SECTIONS } from "../data/turnipContent";
 import { pick, shuffle, starsFor } from "../utils/gameUtils";
@@ -29,6 +29,15 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
   const question = questions[questionIdx] ?? null;
   const isAnswered = Boolean(feedback || checkedBuild);
   const progress = questions.length ? ((questionIdx + (isAnswered ? 1 : 0)) / questions.length) * 100 : 0;
+
+  useEffect(() => {
+    questions
+      .filter((item) => item.type === "picture")
+      .forEach((item) => {
+        const img = new Image();
+        img.src = imageSrc(item.fastImage ?? item.image);
+      });
+  }, [questions]);
 
   function launchLevel(nextSectionIdx, nextLevelIdx) {
     const nextLevel = TURNIP_SECTIONS[nextSectionIdx].levels[nextLevelIdx];
@@ -324,6 +333,7 @@ function TurnipGame({
           {question.type === "picture" && (
             <TurnipPicture
               image={question.image}
+              fastImage={question.fastImage}
               fallbackPicture={question.fallbackPicture}
               answer={question.answer}
             />
@@ -467,11 +477,12 @@ function normalize(value) {
   return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
-function TurnipPicture({ image, fallbackPicture, answer }) {
-  const [hasError, setHasError] = useState(false);
-  const src = `${import.meta.env.BASE_URL}${image}`;
+function TurnipPicture({ image, fastImage, fallbackPicture, answer }) {
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const sources = [fastImage, image].filter(Boolean);
+  const src = sources[sourceIndex] ? imageSrc(sources[sourceIndex]) : null;
 
-  if (hasError) {
+  if (!src) {
     return (
       <div className="turnip-picture turnip-picture-placeholder">
         <span>{fallbackPicture}</span>
@@ -489,10 +500,15 @@ function TurnipPicture({ image, fallbackPicture, answer }) {
         height="200"
         loading="eager"
         decoding="async"
-        onError={() => setHasError(true)}
+        fetchPriority="high"
+        onError={() => setSourceIndex((currentIndex) => (currentIndex + 1 < sources.length ? currentIndex + 1 : sources.length))}
       />
     </div>
   );
+}
+
+function imageSrc(path) {
+  return `${import.meta.env.BASE_URL}${path}`;
 }
 
 function completedKey(sectionIndex, levelIndex) {

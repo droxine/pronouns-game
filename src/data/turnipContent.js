@@ -1,3 +1,38 @@
+const SPANISH_HINTS = {
+  wife: "esposa",
+  daughter: "hija",
+  son: "hijo",
+  cat: "gato",
+  dog: "perro",
+  mouse: "ratón",
+  garden: "jardín",
+  flowers: "flores",
+  trees: "árboles",
+  vegetables: "verduras",
+  apple: "manzana",
+  turnip: "nabo",
+  seed: "semilla",
+  earth: "tierra",
+  morning: "mañana",
+  night: "noche",
+  "little / small": "pequeño",
+  big: "grande",
+  enormous: "enorme",
+  call: "llamar",
+  come: "venir",
+  cook: "cocinar",
+  eat: "comer",
+  grow: "crecer",
+  help: "ayudar",
+  "look at": "mirar",
+  pull: "jalar",
+  put: "poner",
+  into: "dentro de",
+  "out of": "fuera de",
+  under: "debajo de",
+  house: "casa",
+};
+
 export const TURNIP_SECTIONS = [
   {
     id: "foundations",
@@ -253,10 +288,13 @@ function check(prompt, question, answer, options, target) {
 }
 
 function picture(fallbackPicture, answer, options) {
+  const meaning = SPANISH_HINTS[answer] ?? answer;
+
   return {
     type: "picture",
-    prompt: "Tap the English word.",
+    prompt: `Tap the English word for "${meaning}".`,
     fallbackPicture,
+    fastImage: `turnip-images/fast/${imageName(answer)}.jpg`,
     image: `turnip-images/${imageName(answer)}.png`,
     answer,
     options,
