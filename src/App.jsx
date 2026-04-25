@@ -4,6 +4,7 @@ import { GameBody } from "./components/GameBody";
 import { ReviewRows } from "./components/ReviewRows";
 import { SidePanel } from "./components/SidePanel";
 import { StarQuiz } from "./components/StarQuiz";
+import { SunWindQuiz } from "./components/SunWindQuiz";
 import { Topbar } from "./components/Topbar";
 import { TurnipQuiz } from "./components/TurnipQuiz";
 import {
@@ -28,6 +29,7 @@ const SCREENS = {
   FINAL: "final",
   TURNIP: "turnip",
   STAR: "star",
+  SUN_WIND: "sun_wind",
 };
 
 const MODES = {
@@ -62,7 +64,7 @@ export default function App() {
   const question = questions[questionIdx] ?? null;
   const answeredCurrentQuestion = Boolean(feedback || wordOrderChecked);
   const progress = questions.length ? ((questionIdx + (answeredCurrentQuestion ? 1 : 0)) / questions.length) * 100 : 0;
-  const showSidePanel = ![SCREENS.TREE, SCREENS.TURNIP, SCREENS.STAR].includes(screen);
+  const showSidePanel = ![SCREENS.TREE, SCREENS.TURNIP, SCREENS.STAR, SCREENS.SUN_WIND].includes(screen);
 
   function launchLevel(nextLevelIdx, gameMode = MODES.SINGLE) {
     const nextLevel = LEVELS[nextLevelIdx];
@@ -228,6 +230,10 @@ export default function App() {
               sfx.tap();
               setScreen(SCREENS.STAR);
             }}
+            onOpenSunWind={() => {
+              sfx.tap();
+              setScreen(SCREENS.SUN_WIND);
+            }}
           />
         )}
 
@@ -325,12 +331,20 @@ export default function App() {
             onBackToTree={() => setScreen(SCREENS.TREE)}
           />
         )}
+
+        {screen === SCREENS.SUN_WIND && (
+          <SunWindTopicScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+          />
+        )}
       </div>
     </div>
   );
 }
 
-function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, onOpenTurnip, onOpenStar }) {
+function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, onOpenTurnip, onOpenStar, onOpenSunWind }) {
   const pronounStars = completed.size * 3;
 
   return (
@@ -384,6 +398,18 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             status="Ready"
             tone="yellow"
             onClick={onOpenStar}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="☀️"
+            title="The Sun and the Wind"
+            subtitle="Weather, animals, and competition"
+            meta="5 quick practice sets"
+            status="Ready"
+            tone="orange"
+            onClick={onOpenSunWind}
           />
         </div>
       </div>
@@ -478,6 +504,17 @@ function TurnipTopicScreen({ muted, onToggleMute, onBackToTree }) {
 function StarTopicScreen({ muted, onToggleMute, onBackToTree }) {
   return (
     <StarQuiz
+      muted={muted}
+      sfx={useAudio(muted)}
+      onToggleMute={onToggleMute}
+      onBackToTree={onBackToTree}
+    />
+  );
+}
+
+function SunWindTopicScreen({ muted, onToggleMute, onBackToTree }) {
+  return (
+    <SunWindQuiz
       muted={muted}
       sfx={useAudio(muted)}
       onToggleMute={onToggleMute}

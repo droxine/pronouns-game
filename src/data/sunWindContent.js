@@ -1,0 +1,123 @@
+export const SUN_WIND_LEVELS = [
+  {
+    id: "vocab",
+    title: "Tap the Meaning",
+    emoji: "☀️",
+    description: "Important words from the story.",
+    questions: [
+      q("colina", "hill", ["hill", "field", "coat"]),
+      q("perro", "dog", ["dog", "sheep", "tree"]),
+      q("ovejas", "sheep", ["flowers", "sheep", "clouds"]),
+      q("campo", "field", ["field", "sky", "mouth"]),
+      q("abrigo", "coat", ["coat", "breath", "grass"]),
+      q("nublado", "cloudy", ["cloudy", "sunny", "windy"]),
+      q("árbol", "tree", ["tree", "hill", "coat"]),
+      q("nubes", "clouds", ["clouds", "sheep", "children"]),
+      q("cielo", "sky", ["sky", "field", "flower"]),
+      q("gris", "grey", ["white", "grey", "long"]),
+      q("blanco", "white", ["white", "wide", "strong"]),
+      q("viento", "wind", ["wind", "sun", "eagle"]),
+      q("sol", "sun", ["sun", "cloud", "butterfly"]),
+      q("boca", "mouth", ["mouth", "arm", "coat"]),
+      q("respiración / aliento", "breath", ["breath", "smile", "tree"]),
+      q("sonrisa", "smile", ["smile", "grass", "field"]),
+      q("brazos", "arms", ["arms", "clouds", "sheep"]),
+      q("águila", "eagle", ["eagle", "butterfly", "dog"]),
+      q("mariposa", "butterfly", ["butterfly", "eagle", "sheep"]),
+      q("flores", "flowers", ["flowers", "fields", "clouds"]),
+      q("pasto", "grass", ["grass", "coat", "hill"]),
+      q("caliente", "hot", ["hot", "cold", "tired"]),
+      q("frío", "cold", ["cold", "sunny", "wide"]),
+      q("ganador", "winner", ["winner", "king", "tree"]),
+      q("cerca", "near", ["near", "far", "behind"]),
+      q("lejos", "far", ["under", "near", "far"]),
+      ask("It’s windy!", "Put on your coat!", ["Put on your coat!", "Take off your coat!"]),
+      ask("It’s sunny!", "Take off your coat!", ["Put on your coat!", "Take off your coat!"]),
+      ask("The dog says...", "WOOF, WOOF!", ["WOOF, WOOF!", "BAA, BAA!", "STOMP, STOMP!"]),
+      ask("The sheep say...", "BAA, BAA!", ["WOOF, WOOF!", "BAA, BAA!", "STRETCH, STRETCH!"]),
+      ask("The children walk up the hill...", "STOMP, STOMP!", ["HUFF, PUFF!", "BAA, BAA!", "STOMP, STOMP!"]),
+      ask("The wind blows...", "HUFF, PUFF!", ["HUFF, PUFF!", "WOOF, WOOF!", "STRETCH, STRETCH!"]),
+      ask("The sun stretches...", "STRETCH, STRETCH!", ["BAA, BAA!", "STRETCH, STRETCH!", "STOMP, STOMP!"]),
+    ],
+  },
+  {
+    id: "verbs",
+    title: "Story Verbs",
+    emoji: "🏃",
+    description: "Actions and phrases in story sentences.",
+    questions: [
+      story("Tim puts on a long coat.", "What does puts on mean?", "se pone", ["se pone", "se quita", "corre"], "puts on"),
+      story("They go out.", "What does go out mean?", "salen", ["suben", "salen", "se sientan"], "go out"),
+      story("They run in the fields.", "What does run mean?", "corren", ["caminan", "corren", "miran"], "run"),
+      story("Let’s go up the hill!", "What does go up mean?", "subir", ["bajar", "subir", "soplar"], "go up"),
+      story("They walk up the hill.", "What does walk mean?", "caminan", ["caminan", "duermen", "soplan"], "walk"),
+      story("The children look up.", "What does look up mean?", "miran hacia arriba", ["miran hacia arriba", "se esconden", "se quitan"], "look up"),
+      story("The wind blows.", "What does blows mean?", "sopla", ["sonríe", "sopla", "estira"], "blows"),
+      story("The trees bend down.", "What does bend down mean?", "se doblan", ["se doblan", "se paran", "corren"], "bend down"),
+      story("They sit down under the tree.", "What does sit down mean?", "se sientan", ["se levantan", "se sientan", "se quitan"], "sit down"),
+      story("The grass stands up.", "What does stands up mean?", "se levanta", ["se levanta", "se dobla", "sopla"], "stands up"),
+      story("They take off their coats.", "What does take off mean?", "se quitan", ["se ponen", "se quitan", "miran"], "take off"),
+    ],
+  },
+  {
+    id: "weather",
+    title: "Weather and Feelings",
+    emoji: "🌦️",
+    description: "Cloudy, windy, sunny, cold, and hot.",
+    questions: [
+      story("Today it is cloudy.", "How is the weather?", "cloudy", ["cloudy", "windy", "sunny"], "cloudy"),
+      story("There are big clouds in the sky.", "What does big clouds mean?", "nubes grandes", ["abrigos largos", "nubes grandes", "ovejas pequeñas"], "big clouds"),
+      story("Look there, behind the trees!", "Where should they look?", "behind the trees", ["near the fields", "behind the trees", "far from the hill"], "behind"),
+      story("Tim and Tina live near a big hill.", "What does near mean?", "cerca", ["lejos", "cerca", "debajo"], "near"),
+      story("The sheep are far from the tree.", "What does far mean?", "lejos", ["cerca", "lejos", "detrás"], "far"),
+      story("Oh, it’s windy!", "What should you do when it is windy?", "Put on your coat!", ["Take off your coat!", "Put on your coat!", "Eat your coat!"], "windy"),
+      story("BRR! They’re cold!", "How do the children feel?", "cold", ["happy", "tired", "cold"], "cold"),
+      story("Oh, it’s sunny now!", "What should you do when it is sunny and hot?", "Take off your coat!", ["Put on your coat!", "Take off your coat!", "Run under the coat!"], "sunny"),
+      story("I’m hot!", "How does Tim feel?", "hot", ["cold", "tired", "hot"], "hot"),
+      story("I’m very tired!", "How does Tina feel?", "very tired", ["very windy", "very cloudy", "very tired"], "tired"),
+    ],
+  },
+  {
+    id: "story-guided",
+    title: "Story Check 1",
+    emoji: "✅",
+    description: "Use the sentence to answer.",
+    questions: [
+      story("Tim and Tina live near a big hill.", "Where do Tim and Tina live?", "near a big hill", ["near a big hill", "under a tree", "behind a cloud"], "hill"),
+      story("They’ve got a dog, Donald, and five sheep.", "What animals have they got?", "a dog and five sheep", ["a dog and five sheep", "a cat and mouse", "two butterflies"], "dog"),
+      story("Tim puts on a long coat and Tina puts on a short coat.", "Who puts on a long coat?", "Tim", ["Tim", "Tina", "Donald"], "long"),
+      story("Behind the grey cloud there is the wind.", "Where is the wind?", "behind the grey cloud", ["behind the grey cloud", "under the tree", "in the coat"], "wind"),
+      story("Behind the white cloud there is the sun.", "Where is the sun?", "behind the white cloud", ["behind the white cloud", "in the field", "under the hill"], "sun"),
+      story("The wind blows and blows.", "Who blows?", "the wind", ["the sun", "the wind", "the sheep"], "blows"),
+      story("They take off their coats.", "What do Tim and Tina take off?", "their coats", ["their coats", "their shoes", "the clouds"], "coats"),
+    ],
+  },
+  {
+    id: "story-challenge",
+    title: "Story Check 2",
+    emoji: "🧠",
+    description: "Comprehension without the sentence on screen.",
+    questions: [
+      ask("Who are the children?", "Tim and Tina", ["Tim and Tina", "Ben and Katie", "Lizzie and Lola"]),
+      ask("What is the dog's name?", "Donald", ["Donald", "Pip", "Lola"]),
+      ask("Where do the children go?", "up the hill", ["into the house", "up the hill", "under the sea"]),
+      ask("Who says he is the king of the sky?", "the wind", ["the sun", "the wind", "Donald"]),
+      ask("What is the competition about?", "taking off the children's coats", ["eating the turnip", "taking off the children's coats", "finding colours"]),
+      ask("Does the wind make the children take off their coats?", "No", ["Yes", "No"]),
+      ask("Who makes the children hot?", "the sun", ["the sun", "the wind", "the sheep"]),
+      ask("Who wins the competition?", "the sun", ["the sun", "the wind", "the children"]),
+    ],
+  },
+];
+
+function q(spanish, answer, options) {
+  return { prompt: `Tap the English word for "${spanish}".`, answer, options };
+}
+
+function story(prompt, question, answer, options, target) {
+  return { prompt, question, answer, options, target };
+}
+
+function ask(question, answer, options) {
+  return { question, answer, options };
+}

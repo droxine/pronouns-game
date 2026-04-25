@@ -300,6 +300,11 @@ body {
   box-shadow: 0 6px 0 #cc9f00;
 }
 
+.topic-node.orange {
+  border-color: #ff9600;
+  box-shadow: 0 6px 0 #cc6f00;
+}
+
 .topic-icon {
   width: 64px;
   height: 64px;
@@ -356,6 +361,11 @@ body {
 .topic-node.yellow .topic-status {
   background: #fffcea;
   color: #8a6a00;
+}
+
+.topic-node.orange .topic-status {
+  background: #fff4e8;
+  color: #a45300;
 }
 
 @media (max-width: 560px) {
@@ -446,7 +456,17 @@ body {
   color: #cc9f00;
 }
 
+.sunwind-logo,
+.sunwind-title,
+.sunwind-level-name {
+  color: #ff7a00;
+}
+
 .star-hero .mascot-display {
+  font-size: 6rem;
+}
+
+.sunwind-hero .mascot-display {
   font-size: 6rem;
 }
 
@@ -467,14 +487,41 @@ body {
   color: #8a6a00;
 }
 
+.sunwind-book-btn {
+  border-color: #ff9600;
+  box-shadow: 0 6px 0 #cc6f00;
+}
+
+.sunwind-book-btn:hover {
+  box-shadow: 0 8px 0 #cc6f00;
+}
+
+.sunwind-book-btn:active {
+  box-shadow: 0 3px 0 #cc6f00;
+}
+
+.sunwind-book-btn strong {
+  color: #a45300;
+}
+
 .star-sentence {
   border-color: #ffc800;
   box-shadow: 0 4px 0 #cc9f00;
 }
 
+.sunwind-sentence {
+  border-color: #ff9600;
+  box-shadow: 0 4px 0 #cc6f00;
+}
+
 .star-target {
   color: #8a6a00;
   background: #fffcea;
+}
+
+.sunwind-target {
+  color: #a45300;
+  background: #fff4e8;
 }
 
 .star-cover {
@@ -483,8 +530,18 @@ body {
   background: linear-gradient(135deg, #ffffff 0%, #fffcea 100%);
 }
 
+.sunwind-cover {
+  border-color: #ff9600;
+  box-shadow: 0 6px 0 #cc6f00;
+  background: linear-gradient(135deg, #ffffff 0%, #fff4e8 100%);
+}
+
 .star-book-section h3 {
   color: #8a6a00;
+}
+
+.sunwind-book-section h3 {
+  color: #a45300;
 }
 
 .turnip-hero .mascot-display {
