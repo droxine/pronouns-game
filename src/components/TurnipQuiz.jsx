@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CORRECT_MESSAGES, TRY_AGAIN_MESSAGES } from "../data/gameContent";
+import { TURNIP_AUDIO, TURNIP_BOOK_SECTIONS } from "../data/turnipBook";
 import { TURNIP_SECTIONS } from "../data/turnipContent";
 import { pick, shuffle, starsFor } from "../utils/gameUtils";
 import { Confetti } from "./Confetti";
@@ -163,6 +164,10 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
           muted={muted}
           onToggleMute={onToggleMute}
           onBackToTree={onBackToTree}
+          onOpenBook={() => {
+            sfx.tap();
+            setScreen("book");
+          }}
           onLaunchLevel={(nextSectionIdx, nextLevelIdx) => {
             sfx.tap();
             launchLevel(nextSectionIdx, nextLevelIdx);
@@ -208,11 +213,19 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
           onRetry={() => launchLevel(sectionIdx, levelIdx)}
         />
       )}
+
+      {screen === "book" && (
+        <TurnipReader
+          muted={muted}
+          onToggleMute={onToggleMute}
+          onBack={() => setScreen("home")}
+        />
+      )}
     </>
   );
 }
 
-function TurnipHome({ completed, muted, onToggleMute, onBackToTree, onLaunchLevel }) {
+function TurnipHome({ completed, muted, onToggleMute, onBackToTree, onOpenBook, onLaunchLevel }) {
   return (
     <>
       <div className="topbar">
@@ -234,6 +247,14 @@ function TurnipHome({ completed, muted, onToggleMute, onBackToTree, onLaunchLeve
           <div className="home-title turnip-title">The Enormous Turnip</div>
           <div className="home-sub">Vocabulary · Pictures · Story order</div>
         </div>
+
+        <button className="open-book-btn" onClick={onOpenBook}>
+          <span className="open-book-icon">📚</span>
+          <span>
+            <strong>Open the Book</strong>
+            <small>Read and listen to the story</small>
+          </span>
+        </button>
 
         <div className="divider">choose a story section</div>
 
@@ -272,6 +293,59 @@ function TurnipHome({ completed, muted, onToggleMute, onBackToTree, onLaunchLeve
             })}
           </div>
         ))}
+      </div>
+    </>
+  );
+}
+
+function TurnipReader({ muted, onToggleMute, onBack }) {
+  return (
+    <>
+      <div className="topbar">
+        <button className="icon-btn" onClick={onBack}>
+          ← Topic
+        </button>
+        <span className="topbar-logo turnip-logo">📚 Story Book</span>
+        <div className="topbar-icons">
+          <button className="icon-btn" onClick={onToggleMute}>
+            {muted ? "🔇" : "🔊"}
+          </button>
+        </div>
+      </div>
+
+      <div className="scroll book-scroll">
+        <div className="book-cover">
+          <div className="book-cover-icon">📖</div>
+          <div>
+            <div className="book-eyebrow">Read together</div>
+            <h2>The Enormous Turnip</h2>
+            <p>Retold by Ruth Hobart</p>
+          </div>
+        </div>
+
+        <div className="book-audio-card">
+          <div className="book-audio-title">
+            <span>🔊</span>
+            <strong>Story audio</strong>
+          </div>
+          <audio controls preload="metadata" src={imageSrc(TURNIP_AUDIO)}>
+            Your browser does not support audio.
+          </audio>
+        </div>
+
+        <div className="book-pages">
+          {TURNIP_BOOK_SECTIONS.map((section) => (
+            <section key={section.id} className="book-section">
+              <h3>
+                <span>{section.emoji}</span>
+                {section.title}
+              </h3>
+              {section.paragraphs.map((paragraph, index) => (
+                <p key={`${section.id}-${index}`}>{paragraph}</p>
+              ))}
+            </section>
+          ))}
+        </div>
       </div>
     </>
   );

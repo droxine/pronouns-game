@@ -475,6 +475,184 @@ body {
   line-height: 1.35;
 }
 
+.open-book-btn {
+  width: min(100%, 420px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 auto 18px;
+  padding: 16px 18px;
+  border: 3px solid #1cb0f6;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 6px 0 #0a90d0;
+  color: #1a202c;
+  cursor: pointer;
+  font-family: "Nunito", sans-serif;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.open-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #0a90d0;
+}
+
+.open-book-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #0a90d0;
+}
+
+.open-book-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: #eef8ff;
+  font-size: 2rem;
+}
+
+.open-book-btn strong {
+  display: block;
+  color: #0a83bd;
+  font-family: "Fredoka One", cursive;
+  font-size: 1.18rem;
+  line-height: 1.2;
+}
+
+.open-book-btn small {
+  display: block;
+  color: #8a94a3;
+  font-size: 0.86rem;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.book-scroll {
+  padding-inline: 16px;
+}
+
+.book-cover {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(100%, 520px);
+  margin: 8px auto 14px;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #eef8ff 100%);
+  border: 3px solid #1cb0f6;
+  box-shadow: 0 6px 0 #0a90d0;
+  text-align: left;
+}
+
+.book-cover-icon {
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: white;
+  font-size: 3rem;
+}
+
+.book-eyebrow {
+  color: #0a83bd;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.book-cover h2 {
+  color: #1a202c;
+  font-family: "Fredoka One", cursive;
+  font-size: 1.55rem;
+  line-height: 1.15;
+  margin: 3px 0;
+}
+
+.book-cover p {
+  color: #8a94a3;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.book-audio-card {
+  width: min(100%, 520px);
+  margin: 0 auto 16px;
+  padding: 14px;
+  background: white;
+  border: 2px solid #e8e8e8;
+  border-radius: 16px;
+  box-shadow: 0 3px 0 #e0e0e0;
+  text-align: left;
+}
+
+.book-audio-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.book-audio-title strong {
+  font-family: "Fredoka One", cursive;
+}
+
+.book-audio-card audio {
+  width: 100%;
+  display: block;
+}
+
+.book-audio-card p {
+  color: #9aa3af;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
+.book-pages {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  text-align: left;
+}
+
+.book-section {
+  background: #fffef8;
+  border: 2px solid #f0e5bd;
+  border-radius: 18px;
+  box-shadow: 0 4px 0 #e9d99f;
+  margin-bottom: 16px;
+  padding: 18px 18px 8px;
+}
+
+.book-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0a83bd;
+  font-family: "Fredoka One", cursive;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.book-section p {
+  white-space: pre-line;
+  color: #1f2933;
+  font-size: 1.12rem;
+  font-weight: 800;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
 .turnip-picture {
   width: min(100%, 320px);
   height: 220px;
