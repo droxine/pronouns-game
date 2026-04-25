@@ -4,6 +4,7 @@ import { GameBody } from "./components/GameBody";
 import { ReviewRows } from "./components/ReviewRows";
 import { SidePanel } from "./components/SidePanel";
 import { Topbar } from "./components/Topbar";
+import { TurnipQuiz } from "./components/TurnipQuiz";
 import {
   CORRECT_MESSAGES,
   LEVEL_COLORS,
@@ -353,8 +354,8 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             icon="📖"
             title="The Enormous Turnip"
             subtitle="Story vocabulary and comprehension"
-            meta="Levels waiting for content"
-            status="Coming soon"
+            meta="4 sections · 13 practice sets"
+            status="Ready"
             tone="blue"
             onClick={onOpenTurnip}
           />
@@ -439,44 +440,12 @@ function HomeScreen({
 
 function TurnipTopicScreen({ muted, onToggleMute, onBackToTree }) {
   return (
-    <>
-      <div className="topbar">
-        <button className="icon-btn" onClick={onBackToTree}>
-          ← Tree
-        </button>
-        <span className="topbar-logo turnip-logo">📖 The Enormous Turnip</span>
-        <div className="topbar-icons">
-          <button className="icon-btn" onClick={onToggleMute}>
-            {muted ? "🔇" : "🔊"}
-          </button>
-        </div>
-      </div>
-
-      <div className="scroll">
-        <div className="home-hero turnip-hero">
-          <span className="mascot-display">📖</span>
-          <div className="speech-bubble">Story practice will live here soon.</div>
-          <div className="home-title turnip-title">The Enormous Turnip</div>
-          <div className="home-sub">Vocabulary · Reading · Story order</div>
-        </div>
-
-        <div className="divider">levels coming soon</div>
-
-        {["Vocabulary", "Who is in the story?", "Story order"].map((title, index) => (
-          <div key={title} className="level-card coming-soon-card">
-            <div className="lc-icon">{["🌱", "👨‍🌾", "📚"][index]}</div>
-            <div className="lc-info">
-              <div className="lc-name turnip-level-name">Level {index + 1} · {title}</div>
-              <div className="lc-desc">Content will be added next.</div>
-            </div>
-            <div className="lc-right">
-              <div className="lc-stars">☆☆☆</div>
-              <div className="locked-icon">🔒</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
+    <TurnipQuiz
+      muted={muted}
+      sfx={useAudio(muted)}
+      onToggleMute={onToggleMute}
+      onBackToTree={onBackToTree}
+    />
   );
 }
 
