@@ -3,6 +3,7 @@ import { Confetti } from "./components/Confetti";
 import { GameBody } from "./components/GameBody";
 import { ReviewRows } from "./components/ReviewRows";
 import { SidePanel } from "./components/SidePanel";
+import { StarQuiz } from "./components/StarQuiz";
 import { Topbar } from "./components/Topbar";
 import { TurnipQuiz } from "./components/TurnipQuiz";
 import {
@@ -26,6 +27,7 @@ const SCREENS = {
   REVIEW: "review",
   FINAL: "final",
   TURNIP: "turnip",
+  STAR: "star",
 };
 
 const MODES = {
@@ -60,7 +62,7 @@ export default function App() {
   const question = questions[questionIdx] ?? null;
   const answeredCurrentQuestion = Boolean(feedback || wordOrderChecked);
   const progress = questions.length ? ((questionIdx + (answeredCurrentQuestion ? 1 : 0)) / questions.length) * 100 : 0;
-  const showSidePanel = ![SCREENS.TREE, SCREENS.TURNIP].includes(screen);
+  const showSidePanel = ![SCREENS.TREE, SCREENS.TURNIP, SCREENS.STAR].includes(screen);
 
   function launchLevel(nextLevelIdx, gameMode = MODES.SINGLE) {
     const nextLevel = LEVELS[nextLevelIdx];
@@ -222,6 +224,10 @@ export default function App() {
               sfx.tap();
               setScreen(SCREENS.TURNIP);
             }}
+            onOpenStar={() => {
+              sfx.tap();
+              setScreen(SCREENS.STAR);
+            }}
           />
         )}
 
@@ -311,12 +317,20 @@ export default function App() {
             onBackToTree={() => setScreen(SCREENS.TREE)}
           />
         )}
+
+        {screen === SCREENS.STAR && (
+          <StarTopicScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+          />
+        )}
       </div>
     </div>
   );
 }
 
-function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, onOpenTurnip }) {
+function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, onOpenTurnip, onOpenStar }) {
   const pronounStars = completed.size * 3;
 
   return (
@@ -358,6 +372,18 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             status="Ready"
             tone="blue"
             onClick={onOpenTurnip}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="⭐"
+            title="The Star and the Colours"
+            subtitle="Colours, weather, and story order"
+            meta="3 quick practice sets"
+            status="Ready"
+            tone="yellow"
+            onClick={onOpenStar}
           />
         </div>
       </div>
@@ -441,6 +467,17 @@ function HomeScreen({
 function TurnipTopicScreen({ muted, onToggleMute, onBackToTree }) {
   return (
     <TurnipQuiz
+      muted={muted}
+      sfx={useAudio(muted)}
+      onToggleMute={onToggleMute}
+      onBackToTree={onBackToTree}
+    />
+  );
+}
+
+function StarTopicScreen({ muted, onToggleMute, onBackToTree }) {
+  return (
+    <StarQuiz
       muted={muted}
       sfx={useAudio(muted)}
       onToggleMute={onToggleMute}

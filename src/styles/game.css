@@ -295,6 +295,11 @@ body {
   box-shadow: 0 6px 0 #0a90d0;
 }
 
+.topic-node.yellow {
+  border-color: #ffc800;
+  box-shadow: 0 6px 0 #cc9f00;
+}
+
 .topic-icon {
   width: 64px;
   height: 64px;
@@ -346,6 +351,11 @@ body {
 .topic-node.blue .topic-status {
   background: #eef8ff;
   color: #0a83bd;
+}
+
+.topic-node.yellow .topic-status {
+  background: #fffcea;
+  color: #8a6a00;
 }
 
 @media (max-width: 560px) {
@@ -428,6 +438,53 @@ body {
 .turnip-title,
 .turnip-level-name {
   color: #1cb0f6;
+}
+
+.star-logo,
+.star-title,
+.star-level-name {
+  color: #cc9f00;
+}
+
+.star-hero .mascot-display {
+  font-size: 6rem;
+}
+
+.star-book-btn {
+  border-color: #ffc800;
+  box-shadow: 0 6px 0 #cc9f00;
+}
+
+.star-book-btn:hover {
+  box-shadow: 0 8px 0 #cc9f00;
+}
+
+.star-book-btn:active {
+  box-shadow: 0 3px 0 #cc9f00;
+}
+
+.star-book-btn strong {
+  color: #8a6a00;
+}
+
+.star-sentence {
+  border-color: #ffc800;
+  box-shadow: 0 4px 0 #cc9f00;
+}
+
+.star-target {
+  color: #8a6a00;
+  background: #fffcea;
+}
+
+.star-cover {
+  border-color: #ffc800;
+  box-shadow: 0 6px 0 #cc9f00;
+  background: linear-gradient(135deg, #ffffff 0%, #fffcea 100%);
+}
+
+.star-book-section h3 {
+  color: #8a6a00;
 }
 
 .turnip-hero .mascot-display {
