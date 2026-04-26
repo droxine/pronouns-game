@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CORRECT_MESSAGES, TRY_AGAIN_MESSAGES } from "../data/gameContent";
 import { pick, shuffle, starsFor } from "../utils/gameUtils";
 import { Confetti } from "./Confetti";
+import { MascotLibrary } from "./MascotLibrary";
 import { ReviewRows } from "./ReviewRows";
 
 export function BookQuiz({
@@ -24,9 +25,11 @@ export function BookQuiz({
   const [selectedOption, setSelectedOption] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [confetti, setConfetti] = useState(false);
+  const [activeMascot, setActiveMascot] = useState(0);
 
   const level = levels[levelIdx];
   const question = questions[questionIdx] ?? null;
+  const mascot = book.mascots?.[activeMascot] ?? { emoji: book.icon, name: "Book" };
   const progress = questions.length ? ((questionIdx + (feedback ? 1 : 0)) / questions.length) * 100 : 0;
 
   function launchLevel(nextLevelIdx) {
@@ -94,9 +97,15 @@ export function BookQuiz({
           book={book}
           levels={levels}
           completed={completed}
+          mascot={mascot}
+          activeMascot={activeMascot}
           muted={muted}
           onToggleMute={onToggleMute}
           onBackToTree={onBackToTree}
+          onChooseMascot={(mascotIdx) => {
+            sfx.tap();
+            setActiveMascot(mascotIdx);
+          }}
           onOpenBook={() => {
             sfx.tap();
             setScreen("book");
@@ -153,7 +162,7 @@ export function BookQuiz({
   );
 }
 
-function BookHome({ book, levels, completed, muted, onToggleMute, onBackToTree, onOpenBook, onLaunchLevel }) {
+function BookHome({ book, levels, completed, mascot, activeMascot, muted, onToggleMute, onBackToTree, onChooseMascot, onOpenBook, onLaunchLevel }) {
   return (
     <>
       <div className="topbar">
@@ -166,8 +175,8 @@ function BookHome({ book, levels, completed, muted, onToggleMute, onBackToTree, 
 
       <div className="scroll">
         <div className={`home-hero ${book.className}-hero`}>
-          <span className="mascot-display">{book.icon}</span>
-          <div className="speech-bubble">{book.greeting}</div>
+          <span className="mascot-display">{mascot.emoji}</span>
+          <div className="speech-bubble">Practice with {mascot.name}!</div>
           <div className={`home-title ${book.className}-title`}>{book.title}</div>
           <div className="home-sub">{book.subtitle}</div>
         </div>
@@ -195,6 +204,16 @@ function BookHome({ book, levels, completed, muted, onToggleMute, onBackToTree, 
             </div>
           </div>
         ))}
+
+        {book.mascots && (
+          <MascotLibrary
+            mascots={book.mascots}
+            completedCount={completed.size}
+            activeMascot={activeMascot}
+            title="🎒 Story Mascots — unlock book buddies!"
+            onChooseMascot={onChooseMascot}
+          />
+        )}
       </div>
     </>
   );

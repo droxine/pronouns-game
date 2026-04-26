@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { CORRECT_MESSAGES, TRY_AGAIN_MESSAGES } from "../data/gameContent";
+import { STORY_MASCOTS } from "../data/storyMascots";
 import { TURNIP_AUDIO, TURNIP_BOOK_SECTIONS } from "../data/turnipBook";
 import { TURNIP_SECTIONS } from "../data/turnipContent";
 import { pick, shuffle, starsFor } from "../utils/gameUtils";
 import { Confetti } from "./Confetti";
+import { MascotLibrary } from "./MascotLibrary";
 import { ReviewRows } from "./ReviewRows";
 
 const TURNIP_COLORS = ["#1cb0f6", "#58cc02", "#ffc800", "#ce82ff"];
@@ -24,9 +26,11 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
   const [chosenWords, setChosenWords] = useState([]);
   const [checkedBuild, setCheckedBuild] = useState(false);
   const [confetti, setConfetti] = useState(false);
+  const [activeMascot, setActiveMascot] = useState(0);
 
   const section = TURNIP_SECTIONS[sectionIdx];
   const level = section.levels[levelIdx];
+  const mascot = STORY_MASCOTS.turnip[activeMascot];
   const question = questions[questionIdx] ?? null;
   const isAnswered = Boolean(feedback || checkedBuild);
   const progress = questions.length ? ((questionIdx + (isAnswered ? 1 : 0)) / questions.length) * 100 : 0;
@@ -161,9 +165,15 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
       {screen === "home" && (
         <TurnipHome
           completed={completed}
+          mascot={mascot}
+          activeMascot={activeMascot}
           muted={muted}
           onToggleMute={onToggleMute}
           onBackToTree={onBackToTree}
+          onChooseMascot={(mascotIdx) => {
+            sfx.tap();
+            setActiveMascot(mascotIdx);
+          }}
           onOpenBook={() => {
             sfx.tap();
             setScreen("book");
@@ -225,14 +235,14 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
   );
 }
 
-function TurnipHome({ completed, muted, onToggleMute, onBackToTree, onOpenBook, onLaunchLevel }) {
+function TurnipHome({ completed, mascot, activeMascot, muted, onToggleMute, onBackToTree, onChooseMascot, onOpenBook, onLaunchLevel }) {
   return (
     <>
       <div className="topbar">
         <button className="icon-btn" onClick={onBackToTree}>
           ← Tree
         </button>
-        <span className="topbar-logo turnip-logo">📖 The Enormous Turnip</span>
+        <span className="topbar-logo turnip-logo">🍽️ The Enormous Turnip</span>
         <div className="topbar-icons">
           <button className="icon-btn" onClick={onToggleMute}>
             {muted ? "🔇" : "🔊"}
@@ -242,8 +252,8 @@ function TurnipHome({ completed, muted, onToggleMute, onBackToTree, onOpenBook, 
 
       <div className="scroll">
         <div className="home-hero turnip-hero">
-          <span className="mascot-display">📖</span>
-          <div className="speech-bubble">Let's learn story words before reading.</div>
+          <span className="mascot-display">{mascot.emoji}</span>
+          <div className="speech-bubble">Practice with {mascot.name}!</div>
           <div className="home-title turnip-title">The Enormous Turnip</div>
           <div className="home-sub">Vocabulary · Pictures · Story order</div>
         </div>
@@ -293,6 +303,14 @@ function TurnipHome({ completed, muted, onToggleMute, onBackToTree, onOpenBook, 
             })}
           </div>
         ))}
+
+        <MascotLibrary
+          mascots={STORY_MASCOTS.turnip}
+          completedCount={completed.size}
+          activeMascot={activeMascot}
+          title="🎒 Story Mascots — unlock book buddies!"
+          onChooseMascot={onChooseMascot}
+        />
       </div>
     </>
   );
@@ -315,7 +333,7 @@ function TurnipReader({ muted, onToggleMute, onBack }) {
 
       <div className="scroll book-scroll">
         <div className="book-cover">
-          <div className="book-cover-icon">📖</div>
+          <div className="book-cover-icon">🍽️</div>
           <div>
             <div className="book-eyebrow">Read together</div>
             <h2>The Enormous Turnip</h2>

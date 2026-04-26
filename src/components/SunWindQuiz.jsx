@@ -1,4 +1,5 @@
 import { BookQuiz } from "./BookQuiz";
+import { STORY_MASCOTS } from "../data/storyMascots";
 import { SUN_WIND_AUDIO, SUN_WIND_BOOK_SECTIONS } from "../data/sunWindBook";
 import { SUN_WIND_LEVELS } from "../data/sunWindContent";
 
@@ -13,6 +14,7 @@ const SUN_WIND_BOOK = {
   color: "#ff9600",
   shadow: "#cc6f00",
   buttonText: "white",
+  mascots: STORY_MASCOTS["sun-wind"],
 };
 
 export function SunWindQuiz(props) {

@@ -1,4 +1,5 @@
 import { BookQuiz } from "./BookQuiz";
+import { STORY_MASCOTS } from "../data/storyMascots";
 import { STAR_AUDIO, STAR_BOOK_SECTIONS } from "../data/starBook";
 import { STAR_LEVELS } from "../data/starContent";
 
@@ -13,6 +14,7 @@ const STAR_BOOK = {
   color: "#ffc800",
   shadow: "#cc9f00",
   buttonText: "#333",
+  mascots: STORY_MASCOTS.star,
 };
 
 export function StarQuiz(props) {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Confetti } from "./components/Confetti";
 import { GameBody } from "./components/GameBody";
+import { MascotLibrary } from "./components/MascotLibrary";
 import { ReviewRows } from "./components/ReviewRows";
 import { SidePanel } from "./components/SidePanel";
 import { StarQuiz } from "./components/StarQuiz";
@@ -379,7 +380,7 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
           <div className="path-line" />
 
           <TopicNode
-            icon="📖"
+            icon="🍽️"
             title="The Enormous Turnip"
             subtitle="Story vocabulary and comprehension"
             meta="4 sections · 13 practice sets"
@@ -481,8 +482,10 @@ function HomeScreen({
         ))}
 
         <MascotLibrary
-          completed={completed}
+          mascots={MASCOTS}
+          completedCount={completed.size}
           activeMascot={activeMascot}
+          title="🎒 My Mascots — tap to choose your buddy!"
           onChooseMascot={onChooseMascot}
         />
       </div>
@@ -536,46 +539,6 @@ function LevelCard({ level, levelIdx, isCompleted, onChoose }) {
       <div className="lc-right">
         <div className="lc-stars">{isCompleted ? "⭐⭐⭐" : "☆☆☆"}</div>
         <div className="lc-arr">›</div>
-      </div>
-    </div>
-  );
-}
-
-function MascotLibrary({ completed, activeMascot, onChooseMascot }) {
-  return (
-    <div className="mascot-lib">
-      <div className="lib-title">🎒 My Mascots — tap to choose your buddy!</div>
-      <div className="mascot-grid">
-        {MASCOTS.map((mascot, index) => {
-          const isUnlocked = index === 0 || completed.has(index - 1);
-          const isActive = activeMascot === index;
-
-          return (
-            <div
-              key={mascot.id}
-              className={`mascot-card${isUnlocked ? " unlocked" : " locked"}${isActive ? " active" : ""}`}
-              onClick={() => {
-                if (isUnlocked) onChooseMascot(index);
-              }}
-            >
-              <span className={`m-emoji${isUnlocked ? " on" : ""}`}>{mascot.emoji}</span>
-              <span className={`m-name${isUnlocked ? " on" : ""}`}>{isUnlocked ? mascot.name : "???"}</span>
-              {isUnlocked ? (
-                <button
-                  className={`choose-btn${isActive ? " active" : ""}`}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onChooseMascot(index);
-                  }}
-                >
-                  {isActive ? "✓ Chosen" : "Choose"}
-                </button>
-              ) : (
-                <span className="locked-icon">🔒</span>
-              )}
-            </div>
-          );
-        })}
       </div>
     </div>
   );
