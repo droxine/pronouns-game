@@ -228,6 +228,7 @@ export const SUN_WIND_LEVELS = [
           testQuestion("Who are the children?", "Tim and Tina", ["Tim and Tina", "Ben and Katie", "Lizzie and Lola"]),
           testQuestion("Who has a dog and five sheep?", "Tim and Tina", ["Tim and Tina", "the wind", "the sun"]),
           testQuestion("Who says he is strong?", "the wind", ["the sun", "the wind", "Donald"]),
+          testQuestion("Who says he is king of the sky?", "the wind", ["Tim", "the sun", "the wind"]),
           testQuestion("Who wins the competition?", "the sun", ["the wind", "the sun", "the children"]),
         ],
       },
@@ -240,6 +241,7 @@ export const SUN_WIND_LEVELS = [
           testQuestion("What do Tim and Tina put on?", "coats", ["coats", "hats", "shoes"]),
           testQuestion("What do the wind and the sun want to take off?", "the children's coats", ["the children's coats", "the sheep's wool", "Donald's collar"]),
           testQuestion("What does the wind do?", "blows", ["blows", "cooks", "sleeps"]),
+          testQuestion("What does the sun do?", "shines", ["cooks", "blows", "shines"]),
           testQuestion("What do the children take off at the end?", "their coats", ["their coats", "their shoes", "their hats"]),
         ],
       },
@@ -249,7 +251,7 @@ export const SUN_WIND_LEVELS = [
         emoji: "🔵",
         description: "Practice simple where questions.",
         questions: [
-          testQuestion("Where do Tim and Tina live?", "near a big hill", ["near a big hill", "under a cloud", "inside a tree"]),
+          testQuestion("Where do Tim and Tina live?", "near a big hill", ["inside a tree", "under a cloud", "near a big hill"]),
           testQuestion("Where do the children go?", "up the hill", ["up the hill", "into the house", "under the sea"]),
           testQuestion("Where is the wind?", "behind the grey cloud", ["behind the grey cloud", "under the tree", "near the dog"]),
           testQuestion("Where is the sun?", "behind the white cloud", ["behind the white cloud", "in the field", "under the hill"]),
@@ -266,6 +268,7 @@ export const SUN_WIND_LEVELS = [
           testQuestion("The children are cold when the wind blows.", "Yes", ["Yes", "No"]),
           testQuestion("The sun makes the children hot.", "Yes", ["Yes", "No"]),
           testQuestion("The wind wins the competition.", "No", ["Yes", "No"]),
+          testQuestion("The sun wins the competition.", "Yes", ["Yes", "No"]),
         ],
       },
       {
@@ -305,6 +308,7 @@ export const SUN_WIND_LEVELS = [
         questions: [
           testQuestion("Coat means...", "abrigo", ["abrigo", "nube", "colina"]),
           testQuestion("Wind means...", "viento", ["viento", "sol", "perro"]),
+          testQuestion("Blow means...", "soplar", ["viento", "soplar", "brillar"]),
           testQuestion("Sunny means...", "hace sol", ["hace sol", "hace viento", "está nublado"]),
           testQuestion("Cold means...", "frío", ["frío", "caliente", "feliz"]),
           testQuestion("Winner means...", "ganador", ["ganador", "rey", "niño"]),
@@ -316,7 +320,7 @@ export const SUN_WIND_LEVELS = [
         emoji: "⚫",
         description: "Practice light inference questions.",
         questions: [
-          testQuestion("Why do the children keep their coats on?", "They are cold.", ["They are cold.", "They are hot.", "They are sleeping."]),
+          testQuestion("Why do the children keep their coats on?", "They are cold.", ["They are sleeping.", "They are hot.", "They are cold."]),
           testQuestion("Why do the children take off their coats?", "They are hot.", ["They are hot.", "They are cold.", "They are hungry."]),
           testQuestion("Why does the sun win?", "He makes the children hot.", ["He makes the children hot.", "He blows harder.", "He hides behind a cloud."]),
           testQuestion("Why is the wind not happy?", "He cannot take off the coats.", ["He cannot take off the coats.", "He loses his dog.", "He is under a tree."]),
@@ -332,6 +336,7 @@ export const SUN_WIND_LEVELS = [
           testQuestion("How do the children feel when the sun shines?", "hot", ["hot", "cold", "sad"]),
           testQuestion("How does Tina feel near the end?", "very tired", ["very tired", "very cold", "very windy"]),
           testQuestion("How does the wind feel when he loses?", "not happy", ["not happy", "hot", "tired"]),
+          testQuestion("How does the sun feel when he wins?", "happy", ["not happy", "tired", "happy"]),
         ],
       },
       {
@@ -340,9 +345,12 @@ export const SUN_WIND_LEVELS = [
         emoji: "🧠",
         description: "Practice likely short-answer ideas.",
         questions: [
-          testQuestion("What happens after the wind blows?", "The children keep their coats on.", ["The children keep their coats on.", "The children eat dinner.", "The sun goes to bed."]),
+          testQuestion("What happens after the wind blows?", "The children keep their coats on.", ["The children eat dinner.", "The children keep their coats on.", "The sun goes to bed."]),
           testQuestion("What happens after the sun shines?", "The children take off their coats.", ["The children take off their coats.", "The children put on hats.", "The wind wins."]),
           testQuestion("What is special about the ending?", "The sun wins the competition.", ["The sun wins the competition.", "The wind takes a coat.", "Donald runs away."]),
+          testQuestion("What is the competition?", "Take off the coats.", ["Make the children happy.", "Take off the coats.", "Stay on the coats."]),
+          testQuestion("Who tries first?", "The wind.", ["The sun.", "The wind.", "Donald."]),
+          testQuestion("Who tries second?", "The sun.", ["The sun.", "The wind.", "Donald."]),
         ],
       },
     ],
