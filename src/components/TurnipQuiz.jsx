@@ -579,6 +579,7 @@ function TurnipReview({ level, section, sectionIdx, score, total, history, muted
         <ReviewRows entries={history} />
 
         <div className="review-actions">
+          <p className="review-practice-note">Play again to see more words, or continue.</p>
           <button
             className="next-btn"
             style={{ background: turnipColor(sectionIdx), boxShadow: `0 5px 0 ${turnipShadow(sectionIdx)}` }}
@@ -587,7 +588,7 @@ function TurnipReview({ level, section, sectionIdx, score, total, history, muted
             {hasNextLevel ? "Continue →" : "← Back to Topic"}
           </button>
           <button className="ghost-btn" onClick={onRetry}>
-            🔄 Retry this level
+            🔄 Play Again
           </button>
         </div>
       </div>

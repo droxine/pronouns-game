@@ -1188,6 +1188,7 @@ body {
 .review-header h2 { font-family: "Fredoka One", cursive; font-size: 1.7rem; color: #58cc02; margin-bottom: 4px; }
 .review-header .rv-score { font-family: "Fredoka One", cursive; color: #aaa; font-size: 1rem; margin-bottom: 4px; }
 .review-header .stars { font-size: 1.6rem; letter-spacing: 5px; margin-bottom: 16px; }
+.review-practice-note { color: #6f7682; font-size: 0.95rem; font-weight: 800; line-height: 1.35; margin: 0 auto 4px; max-width: 280px; text-align: center; }
 .review-list { margin-bottom: 6px; }
 .rv-title { font-family: "Fredoka One", cursive; font-size: 0.95rem; color: #888; margin-bottom: 10px; }
 

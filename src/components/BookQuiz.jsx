@@ -456,10 +456,11 @@ function BookReview({ book, level, score, total, history, muted, onToggleMute, o
         </div>
         <ReviewRows entries={history} />
         <div className="review-actions">
+          <p className="review-practice-note">Play again to see more words, or continue.</p>
           <button className="next-btn" style={{ background: book.color, boxShadow: `0 5px 0 ${book.shadow}`, color: book.buttonText ?? "white" }} onClick={hasNextLevel ? onContinue : onBack}>
             {hasNextLevel ? "Continue →" : "← Back to Topic"}
           </button>
-          <button className="ghost-btn" onClick={onRetry}>🔄 Retry this level</button>
+          <button className="ghost-btn" onClick={onRetry}>🔄 Play Again</button>
         </div>
       </div>
     </>

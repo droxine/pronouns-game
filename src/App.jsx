@@ -649,6 +649,7 @@ function ReviewScreen({
         <ReviewRows entries={history} />
 
         <div className="review-actions">
+          <p className="review-practice-note">Play again to see more words, or go next.</p>
           {hasNextLevel ? (
             <button
               className="next-btn"
@@ -675,7 +676,7 @@ function ReviewScreen({
             </button>
           )}
           <button className="ghost-btn" onClick={onRetry}>
-            🔄 Retry this level
+            🔄 Play Again
           </button>
           <button className="ghost-btn" onClick={onBack}>
             ← Back to Menu
