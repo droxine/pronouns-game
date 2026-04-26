@@ -41,6 +41,10 @@ const SPANISH_HINTS = {
   wonderful: "maravilloso",
 };
 
+const IMAGE_ALIASES = {
+  "fruit trees": "trees",
+};
+
 export const TURNIP_SECTIONS = [
   {
     id: "foundations",
@@ -123,6 +127,9 @@ export const TURNIP_SECTIONS = [
           meaning("Mr Johnson has got a seed.", "seed", "semilla", ["cama", "semilla", "tierra"]),
           meaning("It is a small turnip seed.", "small", "pequeño", ["grande", "pequeño", "delicioso"]),
           meaning("He puts the seed into the earth.", "earth", "tierra", ["árbol", "tierra", "flor"]),
+          meaning("He goes to bed.", "goes", "va", ["come", "jala", "va"]),
+          meaning("He goes to bed.", "bed", "cama", ["cama", "jardín", "árbol"]),
+          meaning("He goes to bed.", "goes to bed", "se va a la cama", ["sale de la tierra", "se va a la cama", "mira al ratón"]),
           meaning("In the night the turnip grows.", "grows", "crece", ["duerme", "come", "crece"]),
           meaning("It is enormous!", "enormous", "enorme", ["pequeño", "enorme", "rápido"]),
           meaning("He puts his hand on the enormous turnip.", "hand", "mano", ["ratón", "casa", "mano"]),
@@ -146,20 +153,6 @@ export const TURNIP_SECTIONS = [
         ],
       },
       {
-        id: "seed-story",
-        title: "Story Check",
-        emoji: "✅",
-        description: "Check the meaning of short story sentences.",
-        questions: [
-          check("Mr Johnson has got a big garden.", "Is the garden big?", "Yes", ["Yes", "No"], "big"),
-          check("There are vegetables under the trees.", "Where are the vegetables?", "under the trees", ["under the trees", "in the bed", "on the flowers"], "under"),
-          check("He puts the seed into the earth and goes to bed.", "What does he put into the earth?", "the seed", ["the apple", "the seed", "the dog"], "seed"),
-          check("In the night the turnip grows and grows and grows.", "When does the turnip grow?", "in the night", ["in the morning", "in the night", "in the house"], "night"),
-          check("It grows very, very big.", "Is the turnip small now?", "No", ["Yes", "No"], "big"),
-          check("What a wonderful, enormous turnip!", "How is the turnip?", "enormous", ["sad", "little", "enormous"], "enormous"),
-        ],
-      },
-      {
         id: "seed-phrases",
         title: "Phrases",
         emoji: "💬",
@@ -177,6 +170,20 @@ export const TURNIP_SECTIONS = [
           phrase("¡qué nabo enorme!", "What an enormous turnip!", ["What an enormous turnip!", "Come and help me!", "This turnip is delicious!"]),
           phrase("pone su mano en el nabo", "puts his hand on the turnip", ["puts the seed under the tree", "puts his hand on the turnip", "pulls the turnip out"]),
           phrase("qué nabo maravilloso y enorme", "What a wonderful, enormous turnip!", ["What a wonderful, enormous turnip!", "What a little white mouse!", "What a delicious house!"]),
+        ],
+      },
+      {
+        id: "seed-story",
+        title: "Story Check",
+        emoji: "✅",
+        description: "Check the meaning of short story sentences.",
+        questions: [
+          check("Mr Johnson has got a big garden.", "Is the garden big?", "Yes", ["Yes", "No"], "big"),
+          check("There are vegetables under the trees.", "Where are the vegetables?", "under the trees", ["under the trees", "in the bed", "on the flowers"], "under"),
+          check("He puts the seed into the earth and goes to bed.", "What does he put into the earth?", "the seed", ["the apple", "the seed", "the dog"], "seed"),
+          check("In the night the turnip grows and grows and grows.", "When does the turnip grow?", "in the night", ["in the morning", "in the night", "in the house"], "night"),
+          check("It grows very, very big.", "Is the turnip small now?", "No", ["Yes", "No"], "big"),
+          check("What a wonderful, enormous turnip!", "How is the turnip?", "enormous", ["sad", "little", "enormous"], "enormous"),
         ],
       },
       {
@@ -234,20 +241,6 @@ export const TURNIP_SECTIONS = [
         ],
       },
       {
-        id: "pull-story",
-        title: "Story Check",
-        emoji: "✅",
-        description: "Follow the repeated story pattern.",
-        questions: [
-          check("Mr Johnson pulls the turnip but nothing happens!", "Does the turnip come out?", "No", ["Yes", "No"], "nothing happens"),
-          check("Mr Johnson calls his wife, Lizzie.", "Who does Mr Johnson call first?", "his wife", ["his wife", "his cat", "the mouse"], "wife"),
-          check("Come here, Ben. Come and help us.", "Why does Mr Johnson call Ben?", "to help", ["to sleep", "to help", "to cook"], "help"),
-          check("Mr Johnson calls his daughter, Katie.", "Who is Katie?", "his daughter", ["his dog", "his wife", "his daughter"], "daughter"),
-          check("A little white mouse is under the apple tree.", "Where is the mouse?", "under the apple tree", ["on the turnip", "in the house", "under the apple tree"], "under"),
-          check("The enormous turnip comes out of the earth!", "What happens at the end of this part?", "The turnip comes out.", ["The turnip comes out.", "The turnip sleeps.", "The turnip cooks."], "comes out"),
-        ],
-      },
-      {
         id: "pull-phrases",
         title: "Phrases",
         emoji: "💬",
@@ -265,6 +258,20 @@ export const TURNIP_SECTIONS = [
           phrase("mira al señor Johnson", "looks at Mr Johnson", ["cooks with Mr Johnson", "calls Mr Johnson", "looks at Mr Johnson"]),
           phrase("con su esposa Lizzie", "with his wife Lizzie", ["under the apple tree", "with his wife Lizzie", "out of the earth"]),
           phrase("sale de la tierra", "comes out of the earth", ["goes into the house", "comes out of the earth", "goes to bed"]),
+        ],
+      },
+      {
+        id: "pull-story",
+        title: "Story Check",
+        emoji: "✅",
+        description: "Follow the repeated story pattern.",
+        questions: [
+          check("Mr Johnson pulls the turnip but nothing happens!", "Does the turnip come out?", "No", ["Yes", "No"], "nothing happens"),
+          check("Mr Johnson calls his wife, Lizzie.", "Who does Mr Johnson call first?", "his wife", ["his wife", "his cat", "the mouse"], "wife"),
+          check("Come here, Ben. Come and help us.", "Why does Mr Johnson call Ben?", "to help", ["to sleep", "to help", "to cook"], "help"),
+          check("Mr Johnson calls his daughter, Katie.", "Who is Katie?", "his daughter", ["his dog", "his wife", "his daughter"], "daughter"),
+          check("A little white mouse is under the apple tree.", "Where is the mouse?", "under the apple tree", ["on the turnip", "in the house", "under the apple tree"], "under"),
+          check("The enormous turnip comes out of the earth!", "What happens at the end of this part?", "The turnip comes out.", ["The turnip comes out.", "The turnip sleeps.", "The turnip cooks."], "comes out"),
         ],
       },
       {
@@ -319,19 +326,6 @@ export const TURNIP_SECTIONS = [
         ],
       },
       {
-        id: "eat-story",
-        title: "Story Check",
-        emoji: "✅",
-        description: "Understand the ending.",
-        questions: [
-          check("Mrs Johnson says, Come and help me cook this wonderful, enormous turnip!", "What does Mrs Johnson want to do?", "cook the turnip", ["cook the turnip", "pull the tree", "plant the seed"], "cook"),
-          check("She goes into the house with everyone.", "Where does she go?", "into the house", ["under the tree", "into the house", "out of the earth"], "into"),
-          check("Everyone helps Mrs Johnson cook the enormous turnip.", "Who helps?", "everyone", ["no one", "everyone", "only the cat"], "helps"),
-          check("Everyone eats the enormous turnip.", "What do they eat?", "the turnip", ["the turnip", "the seed", "the apple tree"], "eat"),
-          check("This turnip is delicious!", "Do they like the turnip?", "Yes", ["Yes", "No"], "delicious"),
-        ],
-      },
-      {
         id: "eat-phrases",
         title: "Phrases",
         emoji: "💬",
@@ -346,6 +340,19 @@ export const TURNIP_SECTIONS = [
           phrase("todos comen el nabo", "everyone eats the turnip", ["everyone eats the turnip", "everyone pulls the tree", "everyone plants the seed"]),
           phrase("dice todo el mundo", "says everyone", ["helps everyone", "calls everyone", "says everyone"]),
           phrase("este nabo está delicioso", "This turnip is delicious!", ["This turnip is delicious!", "This turnip is too big!", "This seed is small!"]),
+        ],
+      },
+      {
+        id: "eat-story",
+        title: "Story Check",
+        emoji: "✅",
+        description: "Understand the ending.",
+        questions: [
+          check("Mrs Johnson says, Come and help me cook this wonderful, enormous turnip!", "What does Mrs Johnson want to do?", "cook the turnip", ["cook the turnip", "pull the tree", "plant the seed"], "cook"),
+          check("She goes into the house with everyone.", "Where does she go?", "into the house", ["under the tree", "into the house", "out of the earth"], "into"),
+          check("Everyone helps Mrs Johnson cook the enormous turnip.", "Who helps?", "everyone", ["no one", "everyone", "only the cat"], "helps"),
+          check("Everyone eats the enormous turnip.", "What do they eat?", "the turnip", ["the turnip", "the seed", "the apple tree"], "eat"),
+          check("This turnip is delicious!", "Do they like the turnip?", "Yes", ["Yes", "No"], "delicious"),
         ],
       },
       {
@@ -375,13 +382,14 @@ function check(prompt, question, answer, options, target) {
 
 function picture(fallbackPicture, answer, options) {
   const meaning = SPANISH_HINTS[answer] ?? answer;
+  const imageKey = IMAGE_ALIASES[answer] ?? answer;
 
   return {
     type: "picture",
     prompt: `Tap the English word for "${meaning}".`,
     fallbackPicture,
-    fastImage: `turnip-images/fast/${imageName(answer)}.jpg`,
-    image: `turnip-images/${imageName(answer)}.png`,
+    fastImage: `turnip-images/fast/${imageName(imageKey)}.jpg`,
+    image: `turnip-images/${imageName(imageKey)}.png`,
     answer,
     options,
   };
