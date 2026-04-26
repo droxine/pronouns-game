@@ -433,19 +433,21 @@ function TurnipGame({
             />
           )}
 
-          <div className={question.type === "picture" || isOrderingQuestion(question) ? "hint-box" : "story-sentence"}>
-            {question.type === "picture" && question.promptTarget ? (
-              <>
-                Tap the English word for "<strong>{question.promptTarget}</strong>".
-              </>
-            ) : question.type === "picture" || isOrderingQuestion(question) ? (
-              question.prompt
-            ) : (
-              highlightTarget(question.prompt, question.target)
-            )}
-          </div>
+          {question.type !== "test" && (
+            <div className={question.type === "picture" || isOrderingQuestion(question) ? "hint-box" : "story-sentence"}>
+              {question.type === "picture" && question.promptTarget ? (
+                <>
+                  Tap the English word for "<strong>{question.promptTarget}</strong>".
+                </>
+              ) : question.type === "picture" || isOrderingQuestion(question) ? (
+                question.prompt
+              ) : (
+                highlightTarget(question.prompt, question.target)
+              )}
+            </div>
+          )}
 
-          {question.target && question.type !== "phrase" && (
+          {question.target && question.type !== "phrase" && question.type !== "test" && (
             <div className="turnip-target">
               Find: <span>{question.target}</span>
             </div>

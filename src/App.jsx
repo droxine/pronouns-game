@@ -383,7 +383,7 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             icon="🍽️"
             title="The Enormous Turnip"
             subtitle="Story vocabulary and comprehension"
-            meta="4 sections · 19 practice sets"
+            meta="5 sections · 28 practice sets"
             status="Ready"
             tone="blue"
             onClick={onOpenTurnip}
@@ -395,7 +395,7 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             icon="⭐"
             title="The Star and the Colours"
             subtitle="Colours, weather, and story order"
-            meta="9 practice sets"
+            meta="2 sections · 19 practice sets"
             status="Ready"
             tone="yellow"
             onClick={onOpenStar}
@@ -407,7 +407,7 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             icon="☀️"
             title="The Sun and the Wind"
             subtitle="Weather, animals, and competition"
-            meta="7 practice sets"
+            meta="2 sections · 17 practice sets"
             status="Ready"
             tone="orange"
             onClick={onOpenSunWind}

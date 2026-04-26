@@ -274,6 +274,139 @@ export const STAR_LEVELS = [
       ask("Why does the star say Hurray?", "The colours are for her.", ["The colours are for her.", "She is cold.", "The moon is angry."]),
     ],
   },
+  {
+    id: "test-mode",
+    title: "Test Mode",
+    emoji: "📝",
+    description: "IB-style story comprehension practice.",
+    levels: [
+      {
+        id: "test-who",
+        title: "Who / Characters",
+        emoji: "🟢",
+        description: "Practice likely character questions.",
+        questions: [
+          testQuestion("Who calls the stars?", "the moon", ["the moon", "the sun", "the star"]),
+          testQuestion("Who hides under a cloud?", "one star", ["one star", "the moon", "the rainbow"]),
+          testQuestion("Who does the star want to see?", "the sun", ["the moon", "the sun", "the tiger"]),
+          testQuestion("Who says, These colours are for me?", "the star", ["the star", "the moon", "the sun"]),
+        ],
+      },
+      {
+        id: "test-what",
+        title: "What",
+        emoji: "🟡",
+        description: "Practice direct what questions.",
+        questions: [
+          testQuestion("What does the star want to see?", "the sun", ["the sun", "the moon", "the rain"]),
+          testQuestion("What does the star see first?", "colours", ["coats", "colours", "sheep"]),
+          testQuestion("What happens when she sings the song?", "She does not change colour.", ["She does not change colour.", "She goes to bed.", "She becomes a moon."]),
+          testQuestion("What comes out at the end?", "a rainbow", ["a rainbow", "a cloud", "a hat"]),
+        ],
+      },
+      {
+        id: "test-where",
+        title: "Where",
+        emoji: "🔵",
+        description: "Practice simple where questions.",
+        questions: [
+          testQuestion("Where does the star hide?", "under a cloud", ["under a cloud", "behind a lemon", "in the rainbow"]),
+          testQuestion("Where does the sun come from?", "behind the mountains", ["behind the mountains", "under the star", "inside the cloud"]),
+          testQuestion("Where does the rain fall?", "on the mountains and the star", ["on the mountains and the star", "inside the moon", "under the tomatoes"]),
+        ],
+      },
+      {
+        id: "test-yes-no",
+        title: "Yes / No",
+        emoji: "🟣",
+        description: "Practice true-or-false style questions.",
+        questions: [
+          testQuestion("The star goes to bed with the others.", "No", ["Yes", "No"]),
+          testQuestion("The star wants to see the sun.", "Yes", ["Yes", "No"]),
+          testQuestion("The star becomes red.", "No", ["Yes", "No"]),
+          testQuestion("It rains in the story.", "Yes", ["Yes", "No"]),
+          testQuestion("The star is happy at the end.", "Yes", ["Yes", "No"]),
+        ],
+      },
+      {
+        id: "test-order",
+        title: "Order / Sequence",
+        emoji: "🟠",
+        description: "Practice first, next, and story order.",
+        keepOrder: true,
+        questions: [
+          testQuestion("What happens first?", "The moon calls the stars.", ["The moon calls the stars.", "The rainbow comes out.", "It rains."]),
+          testQuestion("What happens next?", "One star hides.", ["One star hides.", "The star eats grapes.", "The moon sleeps."]),
+          testQuestion("What happens before the rainbow?", "It rains.", ["It rains.", "The star becomes red.", "The moon calls."]),
+          testQuestion("What happens last?", "The rainbow comes out.", ["The rainbow comes out.", "The star hides.", "The sun comes out first."]),
+          sequence(
+            "Tap the story order from top to bottom.",
+            ["The star hides", "She sees colours", "She sings songs", "It rains", "Rainbow appears"],
+            "The star hides She sees colours She sings songs It rains Rainbow appears",
+          ),
+        ],
+      },
+      {
+        id: "test-repetition",
+        title: "Repeated Pattern",
+        emoji: "🔴",
+        description: "Practice repeated ideas from the story.",
+        questions: [
+          testQuestion("What does the star say again and again?", "I want to be a ___ star.", ["I want to be a ___ star.", "I want to eat a ___ fruit.", "I want to hide a ___ moon."]),
+          testQuestion("What always happens after the song?", "She is not that colour.", ["She is not that colour.", "She goes to bed.", "She becomes the sun."]),
+          testQuestion("What does she do again and again?", "looks around and sings", ["looks around and sings", "pulls and pulls", "puts on a coat"]),
+        ],
+      },
+      {
+        id: "test-vocab",
+        title: "Vocabulary",
+        emoji: "🟤",
+        description: "Practice simple test vocabulary.",
+        questions: [
+          testQuestion("Hide means...", "esconderse", ["esconderse", "correr", "cocinar"]),
+          testQuestion("Cloud means...", "nube", ["nube", "árbol", "semilla"]),
+          testQuestion("Rain means...", "lluvia", ["lluvia", "viento", "sol"]),
+          testQuestion("Colours means...", "colores", ["colores", "abrigos", "montañas"]),
+          testQuestion("Tired means...", "cansada", ["cansada", "feliz", "caliente"]),
+        ],
+      },
+      {
+        id: "test-why",
+        title: "Why",
+        emoji: "⚫",
+        description: "Practice light inference questions.",
+        questions: [
+          testQuestion("Why does the star hide?", "She wants to see the sun.", ["She wants to see the sun.", "She wants to sleep.", "She wants to eat tomatoes."]),
+          testQuestion("Why is the star sad?", "She cannot change colour.", ["She cannot change colour.", "She is in the house.", "The moon is angry."]),
+          testQuestion("Why does she sleep?", "She is cold and tired.", ["She is cold and tired.", "She is hot and happy.", "She wants a pumpkin."]),
+          testQuestion("Why is she happy at the end?", "She has all the colours.", ["She has all the colours.", "She has a hat.", "She sees the moon."]),
+        ],
+      },
+      {
+        id: "test-feelings",
+        title: "Feelings",
+        emoji: "🟢",
+        description: "Practice how the star feels.",
+        questions: [
+          testQuestion("How does the star feel at the beginning?", "curious", ["curious", "angry", "sleepy"]),
+          testQuestion("How does she feel when she can't change colour?", "sad", ["sad", "hot", "hungry"]),
+          testQuestion("How does she feel when it rains?", "cold and tired", ["cold and tired", "happy and hot", "strong and sunny"]),
+          testQuestion("How does she feel at the end?", "happy", ["happy", "sad", "cold"]),
+        ],
+      },
+      {
+        id: "test-short-answer",
+        title: "Short Answer",
+        emoji: "🧠",
+        description: "Practice likely short-answer ideas.",
+        questions: [
+          testQuestion("What does the star want again and again?", "to be different colours", ["to be different colours", "to eat different fruits", "to call the moon"]),
+          testQuestion("What happens after the rain?", "The sun comes out.", ["The sun comes out.", "The moon calls.", "The star hides."]),
+          testQuestion("What is special about the ending?", "She has all the colours.", ["She has all the colours.", "She is under a cloud.", "She goes to bed."]),
+        ],
+      },
+    ],
+  },
 ];
 
 function q(spanish, answer, options) {
@@ -289,6 +422,10 @@ function ask(question, answer, options) {
   if (!quotedTarget) return { question, answer, options };
 
   return { prompt: question, question: "Choose the English phrase.", target: quotedTarget, answer, options };
+}
+
+function testQuestion(question, answer, options) {
+  return { question, answer, options };
 }
 
 function sequence(prompt, words, answer, note) {

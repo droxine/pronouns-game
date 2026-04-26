@@ -28,14 +28,16 @@ export function BookQuiz({
   const [activeMascot, setActiveMascot] = useState(0);
   const [wordBank, setWordBank] = useState([]);
   const [chosenWords, setChosenWords] = useState([]);
+  const levelSections = buildLevelSections(levels);
+  const playableLevels = levelSections.flatMap((section) => section.levels);
 
-  const level = levels[levelIdx];
+  const level = playableLevels[levelIdx];
   const question = questions[questionIdx] ?? null;
   const mascot = book.mascots?.[activeMascot] ?? { emoji: book.icon, name: "Book" };
   const progress = questions.length ? ((questionIdx + (feedback ? 1 : 0)) / questions.length) * 100 : 0;
 
   function launchLevel(nextLevelIdx) {
-    const nextLevel = levels[nextLevelIdx];
+    const nextLevel = playableLevels[nextLevelIdx];
     const levelQuestions = nextLevel.keepOrder ? nextLevel.questions : shuffle(nextLevel.questions);
     const nextQuestions = levelQuestions.slice(0, questionsForLevel(nextLevel));
 
@@ -154,7 +156,7 @@ export function BookQuiz({
       {screen === "home" && (
         <BookHome
           book={book}
-          levels={levels}
+          levelSections={levelSections}
           completed={completed}
           mascot={mascot}
           activeMascot={activeMascot}
@@ -226,7 +228,7 @@ export function BookQuiz({
   );
 }
 
-function BookHome({ book, levels, completed, mascot, activeMascot, muted, onToggleMute, onBackToTree, onChooseMascot, onOpenBook, onLaunchLevel }) {
+function BookHome({ book, levelSections, completed, mascot, activeMascot, muted, onToggleMute, onBackToTree, onChooseMascot, onOpenBook, onLaunchLevel }) {
   return (
     <>
       <div className="topbar">
@@ -253,19 +255,36 @@ function BookHome({ book, levels, completed, mascot, activeMascot, muted, onTogg
           </span>
         </button>
 
-        <div className="divider">choose a quick quiz</div>
+        <div className="divider">choose a section</div>
 
-        {levels.map((level, index) => (
-          <div key={level.id} className={`level-card${completed.has(index) ? " done" : ""}`} onClick={() => onLaunchLevel(index)}>
-            <div className="lc-icon">{level.emoji}</div>
-            <div className="lc-info">
-              <div className={`lc-name ${book.className}-level-name`}>Level {index + 1} · {level.title}</div>
-              <div className="lc-desc">{level.description}</div>
+        {levelSections.map((section) => (
+          <div key={section.id} className="turnip-section">
+            <div className="turnip-section-header">
+              <span className="turnip-section-emoji">{section.emoji}</span>
+              <div>
+                <div className="turnip-section-title">{section.title}</div>
+                <div className="turnip-section-desc">{section.description}</div>
+              </div>
             </div>
-            <div className="lc-right">
-              <div className="lc-stars">{completed.has(index) ? "⭐⭐⭐" : "☆☆☆"}</div>
-              <div className="lc-arr">›</div>
-            </div>
+
+            {section.levels.map((level, index) => {
+              const levelNumber = index + 1;
+              const isCompleted = completed.has(level.flatIdx);
+
+              return (
+                <div key={level.id} className={`level-card${isCompleted ? " done" : ""}`} onClick={() => onLaunchLevel(level.flatIdx)}>
+                  <div className="lc-icon">{level.emoji}</div>
+                  <div className="lc-info">
+                    <div className={`lc-name ${book.className}-level-name`}>Level {levelNumber} · {level.title}</div>
+                    <div className="lc-desc">{level.description}</div>
+                  </div>
+                  <div className="lc-right">
+                    <div className="lc-stars">{isCompleted ? "⭐⭐⭐" : "☆☆☆"}</div>
+                    <div className="lc-arr">›</div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         ))}
 
@@ -474,6 +493,38 @@ function imageSrc(path) {
 
 function questionsForLevel(level) {
   return Math.min(level.qCount ?? 8, level.questions.length);
+}
+
+function buildLevelSections(items) {
+  const practiceLevels = [];
+  const sections = [];
+
+  items.forEach((item) => {
+    if (item.levels) {
+      sections.push(item);
+      return;
+    }
+
+    practiceLevels.push(item);
+  });
+
+  const groupedSections = [
+    {
+      id: "story-practice",
+      title: "Story Practice",
+      emoji: "📚",
+      description: "Learn vocabulary, phrases, order, and comprehension.",
+      levels: practiceLevels,
+    },
+    ...sections,
+  ].filter((section) => section.levels.length > 0);
+
+  let flatIdx = 0;
+
+  return groupedSections.map((section) => ({
+    ...section,
+    levels: section.levels.map((level) => ({ ...level, flatIdx: flatIdx++ })),
+  }));
 }
 
 function normalize(value) {

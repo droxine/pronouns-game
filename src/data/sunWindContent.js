@@ -213,6 +213,140 @@ export const SUN_WIND_LEVELS = [
       ask("Who wins the competition?", "the sun", ["the children", "the wind", "the sun"]),
     ],
   },
+  {
+    id: "test-mode",
+    title: "Test Mode",
+    emoji: "📝",
+    description: "IB-style story comprehension practice.",
+    levels: [
+      {
+        id: "test-who",
+        title: "Who / Characters",
+        emoji: "🟢",
+        description: "Practice likely character questions.",
+        questions: [
+          testQuestion("Who are the children?", "Tim and Tina", ["Tim and Tina", "Ben and Katie", "Lizzie and Lola"]),
+          testQuestion("Who has a dog and five sheep?", "Tim and Tina", ["Tim and Tina", "the wind", "the sun"]),
+          testQuestion("Who says he is strong?", "the wind", ["the sun", "the wind", "Donald"]),
+          testQuestion("Who wins the competition?", "the sun", ["the wind", "the sun", "the children"]),
+        ],
+      },
+      {
+        id: "test-what",
+        title: "What",
+        emoji: "🟡",
+        description: "Practice direct what questions.",
+        questions: [
+          testQuestion("What do Tim and Tina put on?", "coats", ["coats", "hats", "shoes"]),
+          testQuestion("What do the wind and the sun want to take off?", "the children's coats", ["the children's coats", "the sheep's wool", "Donald's collar"]),
+          testQuestion("What does the wind do?", "blows", ["blows", "cooks", "sleeps"]),
+          testQuestion("What do the children take off at the end?", "their coats", ["their coats", "their shoes", "their hats"]),
+        ],
+      },
+      {
+        id: "test-where",
+        title: "Where",
+        emoji: "🔵",
+        description: "Practice simple where questions.",
+        questions: [
+          testQuestion("Where do Tim and Tina live?", "near a big hill", ["near a big hill", "under a cloud", "inside a tree"]),
+          testQuestion("Where do the children go?", "up the hill", ["up the hill", "into the house", "under the sea"]),
+          testQuestion("Where is the wind?", "behind the grey cloud", ["behind the grey cloud", "under the tree", "near the dog"]),
+          testQuestion("Where is the sun?", "behind the white cloud", ["behind the white cloud", "in the field", "under the hill"]),
+        ],
+      },
+      {
+        id: "test-yes-no",
+        title: "Yes / No",
+        emoji: "🟣",
+        description: "Practice true-or-false style questions.",
+        questions: [
+          testQuestion("Tim and Tina have a dog.", "Yes", ["Yes", "No"]),
+          testQuestion("The wind makes the children take off their coats.", "No", ["Yes", "No"]),
+          testQuestion("The children are cold when the wind blows.", "Yes", ["Yes", "No"]),
+          testQuestion("The sun makes the children hot.", "Yes", ["Yes", "No"]),
+          testQuestion("The wind wins the competition.", "No", ["Yes", "No"]),
+        ],
+      },
+      {
+        id: "test-order",
+        title: "Order / Sequence",
+        emoji: "🟠",
+        description: "Practice first, next, and story order.",
+        keepOrder: true,
+        questions: [
+          testQuestion("What happens first?", "Tim and Tina put on their coats.", ["Tim and Tina put on their coats.", "The sun wins.", "The coats come off."]),
+          testQuestion("Who tries first?", "the wind", ["the wind", "the sun", "Donald"]),
+          testQuestion("What happens last?", "The sun wins.", ["The sun wins.", "The wind blows.", "They go up the hill."]),
+          sequence(
+            "Tap the story order from top to bottom.",
+            ["Children go up the hill", "Wind blows", "Coats stay on", "Sun shines", "Coats come off", "Sun wins"],
+            "Children go up the hill Wind blows Coats stay on Sun shines Coats come off Sun wins",
+          ),
+        ],
+      },
+      {
+        id: "test-pattern",
+        title: "Competition Pattern",
+        emoji: "🔴",
+        description: "Practice the repeated competition idea.",
+        questions: [
+          testQuestion("What is the competition about?", "taking off the children's coats", ["taking off the children's coats", "finding sheep", "eating turnips"]),
+          testQuestion("What does the wind try again and again?", "blowing", ["blowing", "cooking", "hiding"]),
+          testQuestion("What is the wind's problem?", "The coats stay on.", ["The coats stay on.", "The children sleep.", "The sun is cold."]),
+          testQuestion("What makes the coats come off?", "the sun's heat", ["the sun's heat", "the wind's breath", "the dog's bark"]),
+        ],
+      },
+      {
+        id: "test-vocab",
+        title: "Vocabulary",
+        emoji: "🟤",
+        description: "Practice simple test vocabulary.",
+        questions: [
+          testQuestion("Coat means...", "abrigo", ["abrigo", "nube", "colina"]),
+          testQuestion("Wind means...", "viento", ["viento", "sol", "perro"]),
+          testQuestion("Sunny means...", "hace sol", ["hace sol", "hace viento", "está nublado"]),
+          testQuestion("Cold means...", "frío", ["frío", "caliente", "feliz"]),
+          testQuestion("Winner means...", "ganador", ["ganador", "rey", "niño"]),
+        ],
+      },
+      {
+        id: "test-why",
+        title: "Why",
+        emoji: "⚫",
+        description: "Practice light inference questions.",
+        questions: [
+          testQuestion("Why do the children keep their coats on?", "They are cold.", ["They are cold.", "They are hot.", "They are sleeping."]),
+          testQuestion("Why do the children take off their coats?", "They are hot.", ["They are hot.", "They are cold.", "They are hungry."]),
+          testQuestion("Why does the sun win?", "He makes the children hot.", ["He makes the children hot.", "He blows harder.", "He hides behind a cloud."]),
+          testQuestion("Why is the wind not happy?", "He cannot take off the coats.", ["He cannot take off the coats.", "He loses his dog.", "He is under a tree."]),
+        ],
+      },
+      {
+        id: "test-feelings",
+        title: "Feelings",
+        emoji: "🟢",
+        description: "Practice how characters feel.",
+        questions: [
+          testQuestion("How do the children feel when the wind blows?", "cold", ["cold", "hot", "happy"]),
+          testQuestion("How do the children feel when the sun shines?", "hot", ["hot", "cold", "sad"]),
+          testQuestion("How does Tina feel near the end?", "very tired", ["very tired", "very cold", "very windy"]),
+          testQuestion("How does the wind feel when he loses?", "not happy", ["not happy", "hot", "tired"]),
+        ],
+      },
+      {
+        id: "test-short-answer",
+        title: "Short Answer",
+        emoji: "🧠",
+        description: "Practice likely short-answer ideas.",
+        questions: [
+          testQuestion("What happens after the wind blows?", "The children keep their coats on.", ["The children keep their coats on.", "The children eat dinner.", "The sun goes to bed."]),
+          testQuestion("What happens after the sun shines?", "The children take off their coats.", ["The children take off their coats.", "The children put on hats.", "The wind wins."]),
+          testQuestion("What is special about the ending?", "The sun wins the competition.", ["The sun wins the competition.", "The wind takes a coat.", "Donald runs away."]),
+        ],
+      },
+    ],
+  },
 ];
 
 function q(spanish, answer, options) {
@@ -228,6 +362,10 @@ function ask(question, answer, options) {
   if (!quotedTarget) return { question, answer, options };
 
   return { prompt: question, question: "Choose the English phrase.", target: quotedTarget, answer, options };
+}
+
+function testQuestion(question, answer, options) {
+  return { question, answer, options };
 }
 
 function sequence(prompt, words, answer, note) {

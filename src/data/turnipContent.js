@@ -310,11 +310,13 @@ export const TURNIP_SECTIONS = [
             "Tap the pulling order from top to bottom.",
             ["Mr Johnson", "his wife Lizzie", "his son Ben", "his daughter Katie", "his dog Pip", "his cat Lola", "the little white mouse", "POP!"],
             "Mr Johnson his wife Lizzie his son Ben his daughter Katie his dog Pip his cat Lola the little white mouse POP!",
+            "Tap helpers below…",
           ),
           sequence(
             "Tap the last four events from top to bottom.",
             ["his dog Pip", "his cat Lola", "the little white mouse", "POP!"],
             "his dog Pip his cat Lola the little white mouse POP!",
+            "Tap helpers below…",
           ),
         ],
       },
@@ -430,6 +432,122 @@ export const TURNIP_SECTIONS = [
       },
     ],
   },
+  {
+    id: "test-mode",
+    title: "Test Mode",
+    emoji: "📝",
+    description: "IB-style story comprehension practice.",
+    levels: [
+      {
+        id: "test-who",
+        title: "Who / Characters",
+        emoji: "🟢",
+        description: "Practice likely character questions.",
+        questions: [
+          testQuestion("Who has a big garden?", "Mr Johnson", ["Mr Johnson", "Ben", "Mrs Johnson"]),
+          testQuestion("Who helps Mr Johnson pull the turnip?", "Lizzie, Ben, Katie, Pip, Lola and the mouse", ["Lizzie, Ben, Katie, Pip, Lola and the mouse", "only Mrs Johnson", "the sun and the wind"]),
+          testQuestion("Who cooks the turnip?", "Mrs Johnson", ["Katie", "Mrs Johnson", "Pip"]),
+          testQuestion("Who says, This turnip is delicious?", "everyone", ["Mr Johnson only", "everyone", "the mouse only"]),
+        ],
+      },
+      {
+        id: "test-what",
+        title: "What",
+        emoji: "🟡",
+        description: "Practice direct what questions.",
+        questions: [
+          testQuestion("What does Mr Johnson plant?", "a turnip seed", ["an apple tree", "a turnip seed", "a flower"]),
+          testQuestion("What grows in the garden?", "flowers, fruit trees and vegetables", ["flowers, fruit trees and vegetables", "cats and dogs", "hats and coats"]),
+          testQuestion("What happens to the turnip?", "It grows very big.", ["It grows very big.", "It runs away.", "It goes to bed."]),
+          testQuestion("What do they do at the end?", "They cook and eat the turnip.", ["They plant the turnip.", "They cook and eat the turnip.", "They hide the turnip."]),
+        ],
+      },
+      {
+        id: "test-where",
+        title: "Where",
+        emoji: "🔵",
+        description: "Practice simple where questions.",
+        questions: [
+          testQuestion("Where does Mr Johnson put the seed?", "into the earth", ["into the earth", "under the bed", "on the apple tree"]),
+          testQuestion("Where is the mouse?", "under the apple tree", ["in the house", "under the apple tree", "on the turnip"]),
+          testQuestion("Where do they go to cook?", "into the house", ["into the house", "under the tree", "out of the earth"]),
+        ],
+      },
+      {
+        id: "test-yes-no",
+        title: "Yes / No",
+        emoji: "🟣",
+        description: "Practice true-or-false style questions.",
+        questions: [
+          testQuestion("The turnip is small.", "No", ["Yes", "No"]),
+          testQuestion("The family can pull the turnip at first.", "No", ["Yes", "No"]),
+          testQuestion("The mouse helps the family.", "Yes", ["Yes", "No"]),
+          testQuestion("They eat the turnip at the end.", "Yes", ["Yes", "No"]),
+        ],
+      },
+      {
+        id: "test-order",
+        title: "Order / Sequence",
+        emoji: "🟠",
+        description: "Practice first, last, and story order.",
+        keepOrder: true,
+        questions: [
+          testQuestion("What happens first?", "Mr Johnson plants the seed.", ["Mr Johnson plants the seed.", "They eat the turnip.", "The mouse helps."]),
+          testQuestion("What happens last?", "They eat the turnip.", ["The turnip grows.", "They eat the turnip.", "Mr Johnson plants the seed."]),
+          sequence(
+            "Tap the story order from top to bottom.",
+            ["Plant seed", "Turnip grows", "Family pulls", "Mouse helps", "Turnip comes out"],
+            "Plant seed Turnip grows Family pulls Mouse helps Turnip comes out",
+          ),
+        ],
+      },
+      {
+        id: "test-repetition",
+        title: "Repeated Pattern",
+        emoji: "🔴",
+        description: "Practice the repeated story pattern.",
+        questions: [
+          testQuestion("What do they do again and again?", "pull and pull and pull", ["sleep and sleep", "pull and pull and pull", "cook and cook"]),
+          testQuestion("What happens every time at first?", "nothing happens", ["nothing happens", "the turnip comes out", "everyone eats"]),
+          testQuestion("What is always the problem?", "The turnip is too big.", ["The turnip is too big.", "The mouse is too big.", "The house is too small."]),
+        ],
+      },
+      {
+        id: "test-vocab",
+        title: "Vocabulary",
+        emoji: "🟤",
+        description: "Practice simple test vocabulary.",
+        questions: [
+          testQuestion("Enormous means...", "very big", ["very big", "very small", "very cold"]),
+          testQuestion("A seed is...", "something you plant", ["something you plant", "something you eat directly", "something you wear"]),
+          testQuestion("Pull means...", "jalar", ["jalar", "empujar", "dormir"]),
+          testQuestion("Delicious means...", "yummy", ["yummy", "bad", "small"]),
+        ],
+      },
+      {
+        id: "test-why",
+        title: "Why",
+        emoji: "⚫",
+        description: "Practice light inference questions.",
+        questions: [
+          testQuestion("Why can't they pull the turnip at first?", "Because it is too big.", ["Because it is too big.", "Because it is too small.", "Because it is delicious."]),
+          testQuestion("Why do they need the mouse?", "They need more help.", ["They need more help.", "They need food.", "They need a garden."]),
+          testQuestion("Why is the mouse important?", "Because it helps pull the turnip.", ["Because it helps pull the turnip.", "Because it cooks dinner.", "Because it plants the seed."]),
+        ],
+      },
+      {
+        id: "test-short-answer",
+        title: "Short Answer",
+        emoji: "🧠",
+        description: "Practice likely short-answer ideas.",
+        questions: [
+          testQuestion("How do they feel at the end?", "happy", ["happy", "sad", "cold"]),
+          testQuestion("Why is the mouse important?", "It helps pull the turnip.", ["It helps pull the turnip.", "It eats the seed.", "It hides under the bed."]),
+          testQuestion("What lesson fits the story?", "Everyone can help.", ["Everyone can help.", "Seeds are bad.", "Big gardens are scary."]),
+        ],
+      },
+    ],
+  },
 ];
 
 function meaning(prompt, target, answer, options) {
@@ -438,6 +556,10 @@ function meaning(prompt, target, answer, options) {
 
 function check(prompt, question, answer, options, target) {
   return { type: "choice", prompt, question, answer, options, target };
+}
+
+function testQuestion(question, answer, options) {
+  return { type: "test", question, answer, options };
 }
 
 function picture(fallbackPicture, answer, options) {
@@ -460,13 +582,13 @@ function build(words, answer) {
   return { type: "build", prompt: "Put the words in order.", words, answer };
 }
 
-function sequence(prompt, words, answer) {
+function sequence(prompt, words, answer, emptyText = "Tap events below…") {
   return {
     type: "sequence",
     prompt,
     words,
     answer,
-    emptyText: "Tap helpers below…",
+    emptyText,
     checkLabel: "Check order! ✅",
   };
 }
