@@ -34,7 +34,7 @@ export const STAR_LEVELS = [
       q("arañas", "spiders", ["bees", "spiders", "clouds"]),
       q("abejas", "bees", ["bees", "stars", "hats"]),
       q("café", "coffee", ["coffee", "toffee", "tea"]),
-      q("caramelo", "toffee", ["tea", "coffee", "toffee"]),
+      q("toffee", "toffee", ["tea", "coffee", "toffee"]),
       q("té", "tea", ["tea", "bee", "sun"]),
       q("boca", "mouth", ["mouth", "mountain", "moon"]),
       q("cansada", "tired", ["tired", "hot", "wide"]),
@@ -219,7 +219,7 @@ export const STAR_LEVELS = [
 ];
 
 function q(spanish, answer, options) {
-  return { prompt: `Tap the English word for "${spanish}".`, answer, options };
+  return { prompt: `Tap the English word for "${spanish}".`, question: "Choose the English word.", target: spanish, answer, options };
 }
 
 function story(prompt, question, answer, options, target) {
@@ -227,5 +227,8 @@ function story(prompt, question, answer, options, target) {
 }
 
 function ask(question, answer, options) {
-  return { question, answer, options };
+  const quotedTarget = question.match(/"([^"]+)"/)?.[1];
+  if (!quotedTarget) return { question, answer, options };
+
+  return { prompt: question, question: "Choose the English phrase.", target: quotedTarget, answer, options };
 }

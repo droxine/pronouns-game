@@ -160,7 +160,7 @@ export const SUN_WIND_LEVELS = [
 ];
 
 function q(spanish, answer, options) {
-  return { prompt: `Tap the English word for "${spanish}".`, answer, options };
+  return { prompt: `Tap the English word for "${spanish}".`, question: "Choose the English word.", target: spanish, answer, options };
 }
 
 function story(prompt, question, answer, options, target) {
@@ -168,5 +168,8 @@ function story(prompt, question, answer, options, target) {
 }
 
 function ask(question, answer, options) {
-  return { question, answer, options };
+  const quotedTarget = question.match(/"([^"]+)"/)?.[1];
+  if (!quotedTarget) return { question, answer, options };
+
+  return { prompt: question, question: "Choose the English phrase.", target: quotedTarget, answer, options };
 }

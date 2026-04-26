@@ -387,6 +387,7 @@ function picture(fallbackPicture, answer, options) {
   return {
     type: "picture",
     prompt: `Tap the English word for "${meaning}".`,
+    promptTarget: meaning,
     fallbackPicture,
     fastImage: `turnip-images/fast/${imageName(imageKey)}.jpg`,
     image: `turnip-images/${imageName(imageKey)}.png`,
@@ -400,7 +401,14 @@ function build(words, answer) {
 }
 
 function phrase(spanish, answer, options) {
-  return { type: "choice", prompt: `Tap the English phrase for "${spanish}".`, question: "Choose the phrase.", answer, options };
+  return {
+    type: "phrase",
+    prompt: `Tap the English phrase for "${spanish}".`,
+    target: spanish,
+    question: "Choose the English phrase.",
+    answer,
+    options,
+  };
 }
 
 function imageName(answer) {
