@@ -127,6 +127,62 @@ export const SUN_WIND_LEVELS = [
     ],
   },
   {
+    id: "story-order",
+    title: "Story Order",
+    emoji: "⬇️",
+    description: "Practice short story chunks from beginning to end.",
+    keepOrder: true,
+    questions: [
+      sequence(
+        "Tap this beginning order from top to bottom.",
+        [
+          "Tim and Tina live near a hill.",
+          "They put on their coats.",
+          "They go out and run in the fields.",
+          "They go up the hill.",
+        ],
+        "Tim and Tina live near a hill. They put on their coats. They go out and run in the fields. They go up the hill.",
+        "Review order: live near a hill → put on coats → go out and run → go up the hill",
+      ),
+      sequence(
+        "Tap the competition order from top to bottom.",
+        [
+          "The wind says he is strong.",
+          "The wind blows.",
+          "The children are cold.",
+          "The coats stay on.",
+        ],
+        "The wind says he is strong. The wind blows. The children are cold. The coats stay on.",
+        "Review order: wind says he is strong → wind blows → children are cold → coats stay on",
+      ),
+      sequence(
+        "Tap the ending order from top to bottom.",
+        [
+          "The sun says it is his turn.",
+          "The sun shines.",
+          "The children are hot.",
+          "The coats come off.",
+          "The sun is the winner.",
+        ],
+        "The sun says it is his turn. The sun shines. The children are hot. The coats come off. The sun is the winner.",
+        "Review order: sun's turn → sun shines → children are hot → coats come off → sun wins",
+      ),
+      sequence(
+        "Tap the whole story summary from top to bottom.",
+        [
+          "Tim and Tina go up the hill.",
+          "The wind tries first.",
+          "The coats stay on.",
+          "The sun tries next.",
+          "The coats come off.",
+          "The sun wins.",
+        ],
+        "Tim and Tina go up the hill. The wind tries first. The coats stay on. The sun tries next. The coats come off. The sun wins.",
+        "Review order: go up the hill → wind tries → coats stay on → sun tries → coats come off → sun wins",
+      ),
+    ],
+  },
+  {
     id: "story-guided",
     title: "Story Check 1",
     emoji: "✅",
@@ -172,4 +228,16 @@ function ask(question, answer, options) {
   if (!quotedTarget) return { question, answer, options };
 
   return { prompt: question, question: "Choose the English phrase.", target: quotedTarget, answer, options };
+}
+
+function sequence(prompt, words, answer, note) {
+  return {
+    type: "sequence",
+    prompt,
+    words,
+    answer,
+    note,
+    emptyText: "Tap events below...",
+    checkLabel: "Check order! ✅",
+  };
 }

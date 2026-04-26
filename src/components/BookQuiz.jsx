@@ -26,6 +26,8 @@ export function BookQuiz({
   const [feedback, setFeedback] = useState(null);
   const [confetti, setConfetti] = useState(false);
   const [activeMascot, setActiveMascot] = useState(0);
+  const [wordBank, setWordBank] = useState([]);
+  const [chosenWords, setChosenWords] = useState([]);
 
   const level = levels[levelIdx];
   const question = questions[questionIdx] ?? null;
@@ -34,7 +36,8 @@ export function BookQuiz({
 
   function launchLevel(nextLevelIdx) {
     const nextLevel = levels[nextLevelIdx];
-    const nextQuestions = shuffle(nextLevel.questions).slice(0, questionsForLevel(nextLevel));
+    const levelQuestions = nextLevel.keepOrder ? nextLevel.questions : shuffle(nextLevel.questions);
+    const nextQuestions = levelQuestions.slice(0, questionsForLevel(nextLevel));
 
     setLevelIdx(nextLevelIdx);
     setQuestions(nextQuestions);
@@ -43,6 +46,7 @@ export function BookQuiz({
     setHistory([]);
     setSelectedOption(null);
     setFeedback(null);
+    resetOrderingState(nextQuestions[0]);
     setScreen("game");
   }
 
@@ -73,6 +77,50 @@ export function BookQuiz({
     setFeedback({ ok: false, msg: `The answer is "${question.answer}". ${pick(TRY_AGAIN_MESSAGES)}` });
   }
 
+  function addWord(bankIndex) {
+    if (feedback) return;
+
+    sfx.tap();
+    setWordBank((currentBank) => currentBank.map((word, index) => (index === bankIndex ? { ...word, used: true } : word)));
+    setChosenWords((currentWords) => [...currentWords, { word: wordBank[bankIndex].word, bankIdx: bankIndex }]);
+  }
+
+  function removeWord(position) {
+    if (feedback) return;
+
+    sfx.tap();
+    const wordToRemove = chosenWords[position];
+
+    setWordBank((currentBank) => currentBank.map((word, index) => (index === wordToRemove.bankIdx ? { ...word, used: false } : word)));
+    setChosenWords((currentWords) => currentWords.filter((_, index) => index !== position));
+  }
+
+  function checkOrder() {
+    const given = chosenWords.map((word) => word.word).join(" ");
+    const isCorrect = normalize(given) === normalize(question.answer);
+
+    setHistory((currentHistory) => [
+      ...currentHistory,
+      {
+        sentence: question.prompt,
+        answer: question.answer,
+        given,
+        correct: isCorrect,
+        type: book.id,
+      },
+    ]);
+
+    if (isCorrect) {
+      setScore((currentScore) => currentScore + 1);
+      sfx.correct();
+      setFeedback({ ok: true, msg: pick(CORRECT_MESSAGES) });
+      return;
+    }
+
+    sfx.wrong();
+    setFeedback({ ok: false, msg: `Correct: "${question.answer}"` });
+  }
+
   function goNext() {
     if (questionIdx + 1 >= questions.length) {
       setCompleted((currentCompleted) => new Set([...currentCompleted, levelIdx]));
@@ -86,6 +134,17 @@ export function BookQuiz({
     setQuestionIdx((currentIdx) => currentIdx + 1);
     setSelectedOption(null);
     setFeedback(null);
+    resetOrderingState(questions[questionIdx + 1]);
+  }
+
+  function resetOrderingState(nextQuestion) {
+    if (isOrderingQuestion(nextQuestion)) {
+      setWordBank(shuffle(nextQuestion.words).map((word, bankIdx) => ({ word, bankIdx, used: false })));
+    } else {
+      setWordBank([]);
+    }
+
+    setChosenWords([]);
   }
 
   return (
@@ -127,9 +186,14 @@ export function BookQuiz({
           muted={muted}
           selectedOption={selectedOption}
           feedback={feedback}
+          wordBank={wordBank}
+          chosenWords={chosenWords}
           onToggleMute={onToggleMute}
           onBack={() => setScreen("home")}
           onAnswer={answer}
+          onAddWord={addWord}
+          onRemoveWord={removeWord}
+          onCheckOrder={checkOrder}
           onNext={goNext}
         />
       )}
@@ -219,7 +283,25 @@ function BookHome({ book, levels, completed, mascot, activeMascot, muted, onTogg
   );
 }
 
-function BookGame({ book, level, question, questionIdx, progress, muted, selectedOption, feedback, onToggleMute, onBack, onAnswer, onNext }) {
+function BookGame({
+  book,
+  level,
+  question,
+  questionIdx,
+  progress,
+  muted,
+  selectedOption,
+  feedback,
+  wordBank,
+  chosenWords,
+  onToggleMute,
+  onBack,
+  onAnswer,
+  onAddWord,
+  onRemoveWord,
+  onCheckOrder,
+  onNext,
+}) {
   if (!question) return null;
 
   return (
@@ -239,29 +321,71 @@ function BookGame({ book, level, question, questionIdx, progress, muted, selecte
       <div className="scroll">
         <div className="q-card" key={questionIdx}>
           <div className="q-badge">{level.title}</div>
+          {level.note && <div className="order-note">{level.note}</div>}
+          {question.note && <div className="order-note">{question.note}</div>}
           {question.prompt && question.question ? (
             <>
               <div className={`story-sentence ${book.className}-sentence`}>{highlightTarget(question.prompt, question.target, book.className)}</div>
               <div className="q-text">{question.question}</div>
             </>
+          ) : isOrderingQuestion(question) ? (
+            <div className="hint-box">{question.prompt}</div>
           ) : question.question ? (
             <div className="q-text">{question.question}</div>
           ) : (
             <div className="q-text">{question.prompt}</div>
           )}
 
-          <div className="options">
-            {question.options.map((option) => (
-              <button
-                key={option}
-                className={`opt-btn${selectedOption === option ? (option === question.answer ? " correct" : " wrong") : ""}`}
-                onClick={() => onAnswer(option)}
-                disabled={Boolean(feedback)}
-              >
-                {option}
+          {!isOrderingQuestion(question) && (
+            <div className="options">
+              {question.options.map((option) => (
+                <button
+                  key={option}
+                  className={`opt-btn${selectedOption === option ? (option === question.answer ? " correct" : " wrong") : ""}`}
+                  onClick={() => onAnswer(option)}
+                  disabled={Boolean(feedback)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {isOrderingQuestion(question) && (
+            <>
+              <div className={`wo-area${chosenWords.length > 0 ? " active" : ""} sequence-area`}>
+                {chosenWords.length === 0 ? (
+                  <span className="wo-ph">{question.emptyText ?? "Tap events below..."}</span>
+                ) : (
+                  chosenWords.map((word, index) => (
+                    <button
+                      key={`${word.word}-${word.bankIdx}`}
+                      className="chip chosen"
+                      onClick={() => onRemoveWord(index)}
+                      disabled={Boolean(feedback)}
+                    >
+                      {word.word}
+                    </button>
+                  ))
+                )}
+              </div>
+              <div className="word-bank">
+                {wordBank.map((entry, index) => (
+                  <button
+                    key={`${entry.word}-${entry.bankIdx}`}
+                    className={`chip${entry.used ? " used" : ""}`}
+                    onClick={() => !entry.used && onAddWord(index)}
+                    disabled={Boolean(feedback) || entry.used}
+                  >
+                    {entry.word}
+                  </button>
+                ))}
+              </div>
+              <button className="check-btn" onClick={onCheckOrder} disabled={chosenWords.length === 0 || Boolean(feedback)}>
+                {question.checkLabel ?? "Check order! ✅"}
               </button>
-            ))}
-          </div>
+            </>
+          )}
 
           {feedback && (
             <div className={`feedback ${feedback.ok ? "correct" : "wrong"}`}>
@@ -350,6 +474,14 @@ function imageSrc(path) {
 
 function questionsForLevel(level) {
   return Math.min(level.qCount ?? 8, level.questions.length);
+}
+
+function normalize(value) {
+  return value.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function isOrderingQuestion(question) {
+  return question?.type === "sequence";
 }
 
 function highlightTarget(sentence, target, className) {

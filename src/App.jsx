@@ -395,7 +395,7 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             icon="⭐"
             title="The Star and the Colours"
             subtitle="Colours, weather, and story order"
-            meta="3 quick practice sets"
+            meta="9 practice sets"
             status="Ready"
             tone="yellow"
             onClick={onOpenStar}
@@ -407,7 +407,7 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             icon="☀️"
             title="The Sun and the Wind"
             subtitle="Weather, animals, and competition"
-            meta="5 quick practice sets"
+            meta="7 practice sets"
             status="Ready"
             tone="orange"
             onClick={onOpenSunWind}

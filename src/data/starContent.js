@@ -175,6 +175,64 @@ export const STAR_LEVELS = [
     ],
   },
   {
+    id: "story-order",
+    title: "Story Order",
+    emoji: "⬇️",
+    description: "Practice short story chunks from beginning to end.",
+    keepOrder: true,
+    questions: [
+      sequence(
+        "Tap the colour-food order from top to bottom.",
+        [
+          "red tomatoes",
+          "orange pumpkins",
+          "yellow lemons",
+          "green apples",
+          "blue blueberries",
+          "purple and violet grapes",
+        ],
+        "red tomatoes orange pumpkins yellow lemons green apples blue blueberries purple and violet grapes",
+        "Review order: red tomatoes → orange pumpkins → yellow lemons → green apples → blue blueberries → purple and violet grapes",
+      ),
+      sequence(
+        "Tap this beginning order from top to bottom.",
+        [
+          "The moon calls the stars.",
+          "One star hides under a cloud.",
+          "The sun comes out.",
+          "The star sees many colours.",
+        ],
+        "The moon calls the stars. One star hides under a cloud. The sun comes out. The star sees many colours.",
+        "Review order: moon calls → star hides → sun comes out → star sees many colours",
+      ),
+      sequence(
+        "Tap the ending order from top to bottom.",
+        [
+          "It rains.",
+          "The rain stops.",
+          "The clouds go away.",
+          "The sun comes out.",
+          "A rainbow comes out.",
+        ],
+        "It rains. The rain stops. The clouds go away. The sun comes out. A rainbow comes out.",
+        "Review order: it rains → rain stops → clouds go away → sun comes out → rainbow comes out",
+      ),
+      sequence(
+        "Tap the whole story summary from top to bottom.",
+        [
+          "The moon calls the stars.",
+          "One star hides.",
+          "The star sees many colours.",
+          "The songs do not change her colour.",
+          "It rains.",
+          "A rainbow comes out.",
+        ],
+        "The moon calls the stars. One star hides. The star sees many colours. The songs do not change her colour. It rains. A rainbow comes out.",
+        "Review order: moon calls → star hides → sees colours → songs do not work → it rains → rainbow comes out",
+      ),
+    ],
+  },
+  {
     id: "story-guided",
     title: "Story Check 1",
     emoji: "✅",
@@ -231,4 +289,16 @@ function ask(question, answer, options) {
   if (!quotedTarget) return { question, answer, options };
 
   return { prompt: question, question: "Choose the English phrase.", target: quotedTarget, answer, options };
+}
+
+function sequence(prompt, words, answer, note) {
+  return {
+    type: "sequence",
+    prompt,
+    words,
+    answer,
+    note,
+    emptyText: "Tap events below...",
+    checkLabel: "Check order! ✅",
+  };
 }
