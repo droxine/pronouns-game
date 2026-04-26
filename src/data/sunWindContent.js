@@ -78,6 +78,7 @@ export const SUN_WIND_LEVELS = [
     description: "Practice useful chunks from the story.",
     questions: [
       ask("How do you say \"ellos viven cerca de una colina grande\"?", "They live near a big hill.", ["They live near a big hill.", "They run behind a tree.", "They sit under a cloud."]),
+      ask("How do you say \"ellos tienen un perro y cinco ovejas\"?", "They’ve got a dog and five sheep.", ["They’ve got a dog and five sheep.", "They’ve got a cat and five trees.", "They live near a dog and sheep."]),
       ask("How do you say \"él se pone un abrigo largo\"?", "He puts on a long coat.", ["He takes off a long coat.", "He puts on a long coat.", "He has got five sheep."]),
       ask("How do you say \"ellos corren en los campos\"?", "They run in the fields.", ["They run in the fields.", "They sit under the tree.", "They look behind the clouds."]),
       ask("How do you say \"ellos paran\"?", "They stop.", ["They blow.", "They stretch.", "They stop."]),
