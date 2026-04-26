@@ -10,6 +10,7 @@ const SUN_WIND_BOOK = {
   icon: "☀️",
   subtitle: "Weather · Animals · Story check",
   greeting: "Practice the weather story.",
+  hasBook: true,
   className: "sunwind",
   color: "#ff9600",
   shadow: "#cc6f00",

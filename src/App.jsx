@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Confetti } from "./components/Confetti";
+import { BeforeReadingQuiz } from "./components/BeforeReadingQuiz";
 import { GameBody } from "./components/GameBody";
 import { MascotLibrary } from "./components/MascotLibrary";
 import { ReviewRows } from "./components/ReviewRows";
@@ -28,6 +29,8 @@ const SCREENS = {
   GAME: "game",
   REVIEW: "review",
   FINAL: "final",
+  BEFORE_READING: "before_reading",
+  READING_SCHEME: "reading_scheme",
   TURNIP: "turnip",
   STAR: "star",
   SUN_WIND: "sun_wind",
@@ -65,7 +68,7 @@ export default function App() {
   const question = questions[questionIdx] ?? null;
   const answeredCurrentQuestion = Boolean(feedback || wordOrderChecked);
   const progress = questions.length ? ((questionIdx + (answeredCurrentQuestion ? 1 : 0)) / questions.length) * 100 : 0;
-  const showSidePanel = ![SCREENS.TREE, SCREENS.TURNIP, SCREENS.STAR, SCREENS.SUN_WIND].includes(screen);
+  const showSidePanel = ![SCREENS.TREE, SCREENS.BEFORE_READING, SCREENS.READING_SCHEME, SCREENS.TURNIP, SCREENS.STAR, SCREENS.SUN_WIND].includes(screen);
 
   function launchLevel(nextLevelIdx, gameMode = MODES.SINGLE) {
     const nextLevel = LEVELS[nextLevelIdx];
@@ -223,17 +226,13 @@ export default function App() {
               sfx.tap();
               setScreen(SCREENS.HOME);
             }}
-            onOpenTurnip={() => {
+            onOpenBeforeReading={() => {
               sfx.tap();
-              setScreen(SCREENS.TURNIP);
+              setScreen(SCREENS.BEFORE_READING);
             }}
-            onOpenStar={() => {
+            onOpenReadingScheme={() => {
               sfx.tap();
-              setScreen(SCREENS.STAR);
-            }}
-            onOpenSunWind={() => {
-              sfx.tap();
-              setScreen(SCREENS.SUN_WIND);
+              setScreen(SCREENS.READING_SCHEME);
             }}
           />
         )}
@@ -317,6 +316,34 @@ export default function App() {
           />
         )}
 
+        {screen === SCREENS.BEFORE_READING && (
+          <BeforeReadingTopicScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+          />
+        )}
+
+        {screen === SCREENS.READING_SCHEME && (
+          <ReadingSchemeScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+            onOpenTurnip={() => {
+              sfx.tap();
+              setScreen(SCREENS.TURNIP);
+            }}
+            onOpenStar={() => {
+              sfx.tap();
+              setScreen(SCREENS.STAR);
+            }}
+            onOpenSunWind={() => {
+              sfx.tap();
+              setScreen(SCREENS.SUN_WIND);
+            }}
+          />
+        )}
+
         {screen === SCREENS.TURNIP && (
           <TurnipTopicScreen
             muted={muted}
@@ -345,7 +372,7 @@ export default function App() {
   );
 }
 
-function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, onOpenTurnip, onOpenStar, onOpenSunWind }) {
+function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, onOpenBeforeReading, onOpenReadingScheme }) {
   const pronounStars = completed.size * 3;
 
   return (
@@ -380,37 +407,25 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
           <div className="path-line" />
 
           <TopicNode
-            icon="🍽️"
-            title="The Enormous Turnip"
-            subtitle="Story vocabulary and comprehension"
-            meta="5 sections · 28 practice sets"
+            icon="❓"
+            title="Before Reading Scheme"
+            subtitle="Understand test questions first"
+            meta="3 levels · question words"
             status="Ready"
             tone="blue"
-            onClick={onOpenTurnip}
+            onClick={onOpenBeforeReading}
           />
 
           <div className="path-line" />
 
           <TopicNode
-            icon="⭐"
-            title="The Star and the Colours"
-            subtitle="Colours, weather, and story order"
-            meta="2 sections · 19 practice sets"
+            icon="📚"
+            title="Reading Scheme"
+            subtitle="Choose a story to practice"
+            meta="3 stories · test mode included"
             status="Ready"
             tone="yellow"
-            onClick={onOpenStar}
-          />
-
-          <div className="path-line" />
-
-          <TopicNode
-            icon="☀️"
-            title="The Sun and the Wind"
-            subtitle="Weather, animals, and competition"
-            meta="2 sections · 17 practice sets"
-            status="Ready"
-            tone="orange"
-            onClick={onOpenSunWind}
+            onClick={onOpenReadingScheme}
           />
         </div>
       </div>
@@ -488,6 +503,79 @@ function HomeScreen({
           title="🎒 My Mascots — tap to choose your buddy!"
           onChooseMascot={onChooseMascot}
         />
+      </div>
+    </>
+  );
+}
+
+function BeforeReadingTopicScreen({ muted, onToggleMute, onBackToTree }) {
+  return (
+    <BeforeReadingQuiz
+      muted={muted}
+      sfx={useAudio(muted)}
+      onToggleMute={onToggleMute}
+      onBackToTree={onBackToTree}
+    />
+  );
+}
+
+function ReadingSchemeScreen({ muted, onToggleMute, onBackToTree, onOpenTurnip, onOpenStar, onOpenSunWind }) {
+  return (
+    <>
+      <div className="topbar tree-topbar">
+        <button className="icon-btn" onClick={onBackToTree}>
+          ← Tree
+        </button>
+        <span className="topbar-logo">📚 Reading Scheme</span>
+        <div className="topbar-icons">
+          <button className="icon-btn" onClick={onToggleMute}>
+            {muted ? "🔇" : "🔊"}
+          </button>
+        </div>
+      </div>
+
+      <div className="scroll tree-scroll">
+        <div className="tree-header">
+          <div className="tree-kicker">choose a story</div>
+          <h1>Reading Scheme</h1>
+          <p>Practice story words, order, comprehension, and test questions.</p>
+        </div>
+
+        <div className="topic-path">
+          <TopicNode
+            icon="🍽️"
+            title="The Enormous Turnip"
+            subtitle="Story vocabulary and comprehension"
+            meta="5 sections · 28 practice sets"
+            status="Ready"
+            tone="blue"
+            onClick={onOpenTurnip}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="⭐"
+            title="The Star and the Colours"
+            subtitle="Colours, weather, and story order"
+            meta="2 sections · 19 practice sets"
+            status="Ready"
+            tone="yellow"
+            onClick={onOpenStar}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="☀️"
+            title="The Sun and the Wind"
+            subtitle="Weather, animals, and competition"
+            meta="2 sections · 17 practice sets"
+            status="Ready"
+            tone="orange"
+            onClick={onOpenSunWind}
+          />
+        </div>
       </div>
     </>
   );

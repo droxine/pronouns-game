@@ -242,6 +242,8 @@ export function BookQuiz({
 }
 
 function BookHome({ book, levelSections, completed, mascot, activeMascot, muted, onToggleMute, onBackToTree, onChooseMascot, onOpenBook, onLaunchLevel }) {
+  const hasBook = Boolean(book.hasBook);
+
   return (
     <>
       <div className="topbar">
@@ -260,13 +262,15 @@ function BookHome({ book, levelSections, completed, mascot, activeMascot, muted,
           <div className="home-sub">{book.subtitle}</div>
         </div>
 
-        <button className={`open-book-btn ${book.className}-book-btn`} onClick={onOpenBook}>
-          <span className="open-book-icon">📚</span>
-          <span>
-            <strong>Open the Book</strong>
-            <small>Read and listen to the story</small>
-          </span>
-        </button>
+        {hasBook && (
+          <button className={`open-book-btn ${book.className}-book-btn`} onClick={onOpenBook}>
+            <span className="open-book-icon">📚</span>
+            <span>
+              <strong>Open the Book</strong>
+              <small>Read and listen to the story</small>
+            </span>
+          </button>
+        )}
 
         <div className="divider">choose a section</div>
 
@@ -355,10 +359,11 @@ function BookGame({
           <div className="q-badge">{level.title}</div>
           {level.note && <div className="order-note">{level.note}</div>}
           {question.note && <div className="order-note">{question.note}</div>}
-          {question.prompt && question.question ? (
+          {question.hint && <div className="hint-box">{question.hint}</div>}
+          {question.prompt && question.target ? (
             <>
               <div className={`story-sentence ${book.className}-sentence`}>{highlightTarget(question.prompt, question.target, book.className)}</div>
-              <div className="q-text">{question.question}</div>
+              {question.question && <div className="q-text">{question.question}</div>}
             </>
           ) : isOrderingQuestion(question) ? (
             <div className="hint-box">{question.prompt}</div>

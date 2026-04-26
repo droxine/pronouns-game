@@ -10,6 +10,7 @@ const STAR_BOOK = {
   icon: "⭐",
   subtitle: "Vocabulary · Colours · Story check",
   greeting: "Quick colour and story practice.",
+  hasBook: true,
   className: "star",
   color: "#ffc800",
   shadow: "#cc9f00",
