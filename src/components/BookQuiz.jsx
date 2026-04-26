@@ -139,6 +139,17 @@ export function BookQuiz({
     resetOrderingState(questions[questionIdx + 1]);
   }
 
+  function continueAfterReview() {
+    const nextLevelIdx = levelIdx + 1;
+
+    if (nextLevelIdx < playableLevels.length) {
+      launchLevel(nextLevelIdx);
+      return;
+    }
+
+    setScreen("home");
+  }
+
   function resetOrderingState(nextQuestion) {
     if (isOrderingQuestion(nextQuestion)) {
       setWordBank(shuffle(nextQuestion.words).map((word, bankIdx) => ({ word, bankIdx, used: false })));
@@ -211,6 +222,8 @@ export function BookQuiz({
           onToggleMute={onToggleMute}
           onBack={() => setScreen("home")}
           onRetry={() => launchLevel(levelIdx)}
+          onContinue={continueAfterReview}
+          hasNextLevel={levelIdx + 1 < playableLevels.length}
         />
       )}
 
@@ -424,7 +437,7 @@ function BookGame({
   );
 }
 
-function BookReview({ book, level, score, total, history, muted, onToggleMute, onBack, onRetry }) {
+function BookReview({ book, level, score, total, history, muted, onToggleMute, onBack, onRetry, onContinue, hasNextLevel }) {
   return (
     <>
       <div className="topbar">
@@ -443,7 +456,9 @@ function BookReview({ book, level, score, total, history, muted, onToggleMute, o
         </div>
         <ReviewRows entries={history} />
         <div className="review-actions">
-          <button className="next-btn" style={{ background: book.color, boxShadow: `0 5px 0 ${book.shadow}`, color: book.buttonText ?? "white" }} onClick={onBack}>← Back to Topic</button>
+          <button className="next-btn" style={{ background: book.color, boxShadow: `0 5px 0 ${book.shadow}`, color: book.buttonText ?? "white" }} onClick={hasNextLevel ? onContinue : onBack}>
+            {hasNextLevel ? "Continue →" : "← Back to Topic"}
+          </button>
           <button className="ghost-btn" onClick={onRetry}>🔄 Retry this level</button>
         </div>
       </div>

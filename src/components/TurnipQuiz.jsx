@@ -149,6 +149,24 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
     setScreen("review");
   }
 
+  function continueAfterReview() {
+    const nextLevelIdx = levelIdx + 1;
+
+    if (nextLevelIdx < TURNIP_SECTIONS[sectionIdx].levels.length) {
+      launchLevel(sectionIdx, nextLevelIdx);
+      return;
+    }
+
+    const nextSectionIdx = sectionIdx + 1;
+
+    if (nextSectionIdx < TURNIP_SECTIONS.length) {
+      launchLevel(nextSectionIdx, 0);
+      return;
+    }
+
+    setScreen("home");
+  }
+
   function resetBuildState(nextQuestion) {
     if (isOrderingQuestion(nextQuestion)) {
       setWordBank(shuffle(nextQuestion.words).map((word, bankIdx) => ({ word, bankIdx, used: false })));
@@ -222,6 +240,8 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
           onToggleMute={onToggleMute}
           onBack={() => setScreen("home")}
           onRetry={() => launchLevel(sectionIdx, levelIdx)}
+          onContinue={continueAfterReview}
+          hasNextLevel={sectionIdx + 1 < TURNIP_SECTIONS.length || levelIdx + 1 < section.levels.length}
         />
       )}
 
@@ -529,7 +549,7 @@ function TurnipGame({
   );
 }
 
-function TurnipReview({ level, section, sectionIdx, score, total, history, muted, onToggleMute, onBack, onRetry }) {
+function TurnipReview({ level, section, sectionIdx, score, total, history, muted, onToggleMute, onBack, onRetry, onContinue, hasNextLevel }) {
   return (
     <>
       <div className="topbar">
@@ -562,9 +582,9 @@ function TurnipReview({ level, section, sectionIdx, score, total, history, muted
           <button
             className="next-btn"
             style={{ background: turnipColor(sectionIdx), boxShadow: `0 5px 0 ${turnipShadow(sectionIdx)}` }}
-            onClick={onBack}
+            onClick={hasNextLevel ? onContinue : onBack}
           >
-            ← Back to Topic
+            {hasNextLevel ? "Continue →" : "← Back to Topic"}
           </button>
           <button className="ghost-btn" onClick={onRetry}>
             🔄 Retry this level
