@@ -46,7 +46,8 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
 
   function launchLevel(nextSectionIdx, nextLevelIdx) {
     const nextLevel = TURNIP_SECTIONS[nextSectionIdx].levels[nextLevelIdx];
-    const nextQuestions = shuffle(nextLevel.questions).slice(0, nextLevel.qCount ?? nextLevel.questions.length);
+    const levelQuestions = nextLevel.keepOrder ? nextLevel.questions : shuffle(nextLevel.questions);
+    const nextQuestions = levelQuestions.slice(0, nextLevel.qCount ?? nextLevel.questions.length);
 
     setSectionIdx(nextSectionIdx);
     setLevelIdx(nextLevelIdx);
@@ -149,7 +150,7 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
   }
 
   function resetBuildState(nextQuestion) {
-    if (nextQuestion?.type === "build") {
+    if (isOrderingQuestion(nextQuestion)) {
       setWordBank(shuffle(nextQuestion.words).map((word, bankIdx) => ({ word, bankIdx, used: false })));
     } else {
       setWordBank([]);
@@ -421,6 +422,7 @@ function TurnipGame({
       <div className="scroll">
         <div className="q-card" key={questionIdx}>
           <div className="q-badge">{level.title}</div>
+          {level.note && <div className="order-note">{level.note}</div>}
 
           {question.type === "picture" && (
             <TurnipPicture
@@ -431,12 +433,12 @@ function TurnipGame({
             />
           )}
 
-          <div className={question.type === "picture" || question.type === "build" ? "hint-box" : "story-sentence"}>
+          <div className={question.type === "picture" || isOrderingQuestion(question) ? "hint-box" : "story-sentence"}>
             {question.type === "picture" && question.promptTarget ? (
               <>
                 Tap the English word for "<strong>{question.promptTarget}</strong>".
               </>
-            ) : question.type === "picture" || question.type === "build" ? (
+            ) : question.type === "picture" || isOrderingQuestion(question) ? (
               question.prompt
             ) : (
               highlightTarget(question.prompt, question.target)
@@ -449,7 +451,7 @@ function TurnipGame({
             </div>
           )}
 
-          {question.type !== "build" && (
+          {!isOrderingQuestion(question) && (
             <>
               <div className="q-text">{question.question}</div>
               <div className="options">
@@ -467,11 +469,11 @@ function TurnipGame({
             </>
           )}
 
-          {question.type === "build" && (
+          {isOrderingQuestion(question) && (
             <>
-              <div className={`wo-area${chosenWords.length > 0 ? " active" : ""}`}>
+              <div className={`wo-area${chosenWords.length > 0 ? " active" : ""}${question.type === "sequence" ? " sequence-area" : ""}`}>
                 {chosenWords.length === 0 ? (
-                  <span className="wo-ph">Tap words below…</span>
+                  <span className="wo-ph">{question.emptyText ?? "Tap words below…"}</span>
                 ) : (
                   chosenWords.map((word, index) => (
                     <button
@@ -498,7 +500,7 @@ function TurnipGame({
                 ))}
               </div>
               <button className="check-btn" onClick={onCheckBuild} disabled={chosenWords.length === 0 || checkedBuild}>
-                Check! ✅
+                {question.checkLabel ?? "Check! ✅"}
               </button>
             </>
           )}
@@ -573,6 +575,10 @@ function TurnipReview({ level, section, sectionIdx, score, total, history, muted
 
 function normalize(value) {
   return value.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function isOrderingQuestion(question) {
+  return question?.type === "build" || question?.type === "sequence";
 }
 
 function TurnipPicture({ image, fastImage, fallbackPicture, answer }) {

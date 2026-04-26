@@ -1086,6 +1086,31 @@ body {
 .wo-ph { color: #ccc; font-size: 0.88rem; font-weight: 600; padding: 2px 6px; }
 .word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 
+.order-note {
+  background: #eef8ff;
+  border: 2px solid #b0d8f0;
+  border-radius: 12px;
+  color: #23536b;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+}
+
+.sequence-area {
+  align-items: stretch;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+
+.sequence-area .chip.chosen {
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
 .chip {
   background: white;
   border: 2.5px solid #1cb0f6;

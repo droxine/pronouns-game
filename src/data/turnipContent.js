@@ -277,15 +277,57 @@ export const TURNIP_SECTIONS = [
         ],
       },
       {
+        id: "order-words",
+        title: "Order Words",
+        emoji: "🔢",
+        description: "Practice words for talking about story order.",
+        keepOrder: true,
+        questions: [
+          meaning("Mr Johnson pulls first.", "first", "primero", ["primero", "último", "después"]),
+          meaning("The little white mouse helps last.", "last", "último", ["antes", "último", "primero"]),
+          meaning("First Mr Johnson pulls. Then he calls his wife Lizzie.", "then", "luego / después", ["luego / después", "antes de", "nada"]),
+          meaning("His wife Lizzie helps before his son Ben.", "before", "antes de", ["después de", "antes de", "debajo de"]),
+          meaning("His son Ben helps after his wife Lizzie.", "after", "después de", ["después de", "fuera de", "primero"]),
+          meaning("First Mr Johnson pulls. Then he calls his wife Lizzie.", "wife", "esposa", ["hija", "prima", "esposa"]),
+          meaning("Mr Johnson calls his daughter, Katie", "daughter", "hija", ["esposa", "hija", "prima"]),
+        ],
+      },
+      {
+        id: "pull-order",
+        title: "Pulling Order",
+        emoji: "⬇️",
+        description: "Practice who helps next until the turnip comes out.",
+        keepOrder: true,
+        note: "Review order: Mr Johnson → his wife Lizzie → his son Ben → his daughter Katie → his dog Pip → his cat Lola → the little white mouse → POP!",
+        questions: [
+          check("Mr Johnson pulls first. Then he calls his wife Lizzie.", "Who helps after Mr Johnson?", "his wife Lizzie", ["his son Ben", "his wife Lizzie", "his cat Lola"], "his wife Lizzie"),
+          check("His wife Lizzie helps Mr Johnson. Then they call his son Ben.", "Who helps after his wife Lizzie?", "his son Ben", ["his dog Pip", "his son Ben", "his daughter Katie"], "his son Ben"),
+          check("His son Ben helps. Then they call his daughter Katie.", "Who helps after his son Ben?", "his daughter Katie", ["his daughter Katie", "his cat Lola", "the little white mouse"], "his daughter Katie"),
+          check("His daughter Katie helps. Then they call his dog Pip.", "Who helps after his daughter Katie?", "his dog Pip", ["his wife Lizzie", "his dog Pip", "his son Ben"], "his dog Pip"),
+          check("His dog Pip helps. Then they call his cat Lola.", "Who helps after his dog Pip?", "his cat Lola", ["his cat Lola", "his daughter Katie", "Mr Johnson"], "his cat Lola"),
+          check("His cat Lola helps. Then the little white mouse helps.", "Who helps after his cat Lola?", "the little white mouse", ["the little white mouse", "his son Ben", "his wife Lizzie"], "little white mouse"),
+          sequence(
+            "Tap the pulling order from top to bottom.",
+            ["Mr Johnson", "his wife Lizzie", "his son Ben", "his daughter Katie", "his dog Pip", "his cat Lola", "the little white mouse", "POP!"],
+            "Mr Johnson his wife Lizzie his son Ben his daughter Katie his dog Pip his cat Lola the little white mouse POP!",
+          ),
+          sequence(
+            "Tap the last four events from top to bottom.",
+            ["his dog Pip", "his cat Lola", "the little white mouse", "POP!"],
+            "his dog Pip his cat Lola the little white mouse POP!",
+          ),
+        ],
+      },
+      {
         id: "pull-story",
         title: "Story Check",
         emoji: "✅",
         description: "Follow the repeated story pattern.",
         questions: [
           check("Mr Johnson pulls the turnip but nothing happens!", "Does the turnip come out?", "No", ["Yes", "No"], "nothing happens"),
-          check("Mr Johnson calls his wife, Lizzie.", "Who does Mr Johnson call first?", "his wife", ["his wife", "his cat", "the mouse"], "wife"),
-          check("Come here, Ben. Come and help us.", "Why does Mr Johnson call Ben?", "to help", ["to sleep", "to help", "to cook"], "help"),
-          check("Mr Johnson calls his daughter, Katie.", "Who is Katie?", "his daughter", ["his dog", "his wife", "his daughter"], "daughter"),
+          check("Mr Johnson calls his wife, Lizzie.", "Who does Mr Johnson call first?", "his wife Lizzie", ["his wife Lizzie", "his cat Lola", "the little white mouse"], "wife"),
+          check("Come here, Ben. Come and help us.", "Why does Mr Johnson call his son Ben?", "to help", ["to sleep", "to help", "to cook"], "help"),
+          check("Mr Johnson calls his daughter, Katie.", "Who is Katie?", "his daughter Katie", ["his dog Pip", "his wife Lizzie", "his daughter Katie"], "daughter"),
           check("A little white mouse is under the apple tree.", "Where is the mouse?", "under the apple tree", ["on the turnip", "in the house", "under the apple tree"], "under"),
           check("The enormous turnip comes out of the earth!", "What happens at the end of this part?", "The turnip comes out.", ["The turnip comes out.", "The turnip sleeps.", "The turnip cooks."], "comes out"),
         ],
@@ -416,6 +458,17 @@ function picture(fallbackPicture, answer, options) {
 
 function build(words, answer) {
   return { type: "build", prompt: "Put the words in order.", words, answer };
+}
+
+function sequence(prompt, words, answer) {
+  return {
+    type: "sequence",
+    prompt,
+    words,
+    answer,
+    emptyText: "Tap helpers below…",
+    checkLabel: "Check order! ✅",
+  };
 }
 
 function phrase(spanish, answer, options) {

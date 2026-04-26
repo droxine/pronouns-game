@@ -383,7 +383,7 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             icon="🍽️"
             title="The Enormous Turnip"
             subtitle="Story vocabulary and comprehension"
-            meta="4 sections · 13 practice sets"
+            meta="4 sections · 19 practice sets"
             status="Ready"
             tone="blue"
             onClick={onOpenTurnip}
