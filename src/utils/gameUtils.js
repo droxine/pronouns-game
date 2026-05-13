@@ -19,7 +19,11 @@ export function buildQuestions(type, count) {
     word_order: WORD_ORDER_QUESTIONS,
   };
 
-  return shuffle(sourceByType[type]).slice(0, count);
+  return shuffle(sourceByType[type]).slice(0, count).map(shuffleOptions);
+}
+
+export function shuffleOptions(question) {
+  return question.options ? { ...question, options: shuffle(question.options) } : question;
 }
 
 export function starsFor(score, total) {

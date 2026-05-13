@@ -3,7 +3,7 @@ import { CORRECT_MESSAGES, TRY_AGAIN_MESSAGES } from "../data/gameContent";
 import { STORY_MASCOTS } from "../data/storyMascots";
 import { TURNIP_AUDIO, TURNIP_BOOK_SECTIONS } from "../data/turnipBook";
 import { TURNIP_SECTIONS } from "../data/turnipContent";
-import { pick, shuffle, starsFor } from "../utils/gameUtils";
+import { pick, shuffle, shuffleOptions, starsFor } from "../utils/gameUtils";
 import { Confetti } from "./Confetti";
 import { MascotLibrary } from "./MascotLibrary";
 import { ReviewRows } from "./ReviewRows";
@@ -47,7 +47,7 @@ export function TurnipQuiz({ muted, sfx, onToggleMute, onBackToTree }) {
   function launchLevel(nextSectionIdx, nextLevelIdx) {
     const nextLevel = TURNIP_SECTIONS[nextSectionIdx].levels[nextLevelIdx];
     const levelQuestions = nextLevel.keepOrder ? nextLevel.questions : shuffle(nextLevel.questions);
-    const nextQuestions = levelQuestions.slice(0, nextLevel.qCount ?? nextLevel.questions.length);
+    const nextQuestions = levelQuestions.slice(0, nextLevel.qCount ?? nextLevel.questions.length).map(shuffleOptions);
 
     setSectionIdx(nextSectionIdx);
     setLevelIdx(nextLevelIdx);

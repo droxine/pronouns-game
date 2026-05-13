@@ -11,6 +11,10 @@ const BEFORE_READING_BOOK = {
   color: "#1cb0f6",
   shadow: "#0a90d0",
   buttonText: "white",
+  practiceSectionId: "question-practice",
+  practiceSectionTitle: "Question Practice",
+  practiceSectionEmoji: "❓",
+  practiceSectionDescription: "Learn words used in questions.",
   mascots: [
     { id: "question", emoji: "❓", name: "Question" },
     { id: "detective", emoji: "🔎", name: "Finder" },

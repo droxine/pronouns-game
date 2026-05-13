@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CORRECT_MESSAGES, TRY_AGAIN_MESSAGES } from "../data/gameContent";
-import { pick, shuffle, starsFor } from "../utils/gameUtils";
+import { pick, shuffle, shuffleOptions, starsFor } from "../utils/gameUtils";
 import { Confetti } from "./Confetti";
 import { MascotLibrary } from "./MascotLibrary";
 import { ReviewRows } from "./ReviewRows";
@@ -28,7 +28,7 @@ export function BookQuiz({
   const [activeMascot, setActiveMascot] = useState(0);
   const [wordBank, setWordBank] = useState([]);
   const [chosenWords, setChosenWords] = useState([]);
-  const levelSections = buildLevelSections(levels);
+  const levelSections = buildLevelSections(levels, book);
   const playableLevels = levelSections.flatMap((section) => section.levels);
 
   const level = playableLevels[levelIdx];
@@ -39,7 +39,7 @@ export function BookQuiz({
   function launchLevel(nextLevelIdx) {
     const nextLevel = playableLevels[nextLevelIdx];
     const levelQuestions = nextLevel.keepOrder ? nextLevel.questions : shuffle(nextLevel.questions);
-    const nextQuestions = levelQuestions.slice(0, questionsForLevel(nextLevel));
+    const nextQuestions = levelQuestions.slice(0, questionsForLevel(nextLevel)).map(shuffleOptions);
 
     setLevelIdx(nextLevelIdx);
     setQuestions(nextQuestions);
@@ -516,7 +516,7 @@ function questionsForLevel(level) {
   return Math.min(level.qCount ?? 8, level.questions.length);
 }
 
-function buildLevelSections(items) {
+function buildLevelSections(items, book) {
   const practiceLevels = [];
   const sections = [];
 
@@ -531,10 +531,10 @@ function buildLevelSections(items) {
 
   const groupedSections = [
     {
-      id: "story-practice",
-      title: "Story Practice",
-      emoji: "📚",
-      description: "Learn vocabulary, phrases, order, and comprehension.",
+      id: book.practiceSectionId ?? "story-practice",
+      title: book.practiceSectionTitle ?? "Story Practice",
+      emoji: book.practiceSectionEmoji ?? "📚",
+      description: book.practiceSectionDescription ?? "Learn vocabulary, phrases, order, and comprehension.",
       levels: practiceLevels,
     },
     ...sections,

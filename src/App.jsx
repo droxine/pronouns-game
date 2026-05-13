@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Confetti } from "./components/Confetti";
 import { BeforeReadingQuiz } from "./components/BeforeReadingQuiz";
 import { GameBody } from "./components/GameBody";
+import { HighFrequencyPart2Quiz, HighFrequencyQuiz } from "./components/HighFrequencyQuiz";
 import { MascotLibrary } from "./components/MascotLibrary";
 import { ReviewRows } from "./components/ReviewRows";
 import { SidePanel } from "./components/SidePanel";
@@ -29,6 +30,8 @@ const SCREENS = {
   GAME: "game",
   REVIEW: "review",
   FINAL: "final",
+  HIGH_FREQUENCY: "high_frequency",
+  HIGH_FREQUENCY_2: "high_frequency_2",
   BEFORE_READING: "before_reading",
   READING_SCHEME: "reading_scheme",
   TURNIP: "turnip",
@@ -68,7 +71,16 @@ export default function App() {
   const question = questions[questionIdx] ?? null;
   const answeredCurrentQuestion = Boolean(feedback || wordOrderChecked);
   const progress = questions.length ? ((questionIdx + (answeredCurrentQuestion ? 1 : 0)) / questions.length) * 100 : 0;
-  const showSidePanel = ![SCREENS.TREE, SCREENS.BEFORE_READING, SCREENS.READING_SCHEME, SCREENS.TURNIP, SCREENS.STAR, SCREENS.SUN_WIND].includes(screen);
+  const showSidePanel = ![
+    SCREENS.TREE,
+    SCREENS.HIGH_FREQUENCY,
+    SCREENS.HIGH_FREQUENCY_2,
+    SCREENS.BEFORE_READING,
+    SCREENS.READING_SCHEME,
+    SCREENS.TURNIP,
+    SCREENS.STAR,
+    SCREENS.SUN_WIND,
+  ].includes(screen);
 
   function launchLevel(nextLevelIdx, gameMode = MODES.SINGLE) {
     const nextLevel = LEVELS[nextLevelIdx];
@@ -226,6 +238,14 @@ export default function App() {
               sfx.tap();
               setScreen(SCREENS.HOME);
             }}
+            onOpenHighFrequency={() => {
+              sfx.tap();
+              setScreen(SCREENS.HIGH_FREQUENCY);
+            }}
+            onOpenHighFrequencyPart2={() => {
+              sfx.tap();
+              setScreen(SCREENS.HIGH_FREQUENCY_2);
+            }}
             onOpenBeforeReading={() => {
               sfx.tap();
               setScreen(SCREENS.BEFORE_READING);
@@ -316,6 +336,22 @@ export default function App() {
           />
         )}
 
+        {screen === SCREENS.HIGH_FREQUENCY && (
+          <HighFrequencyTopicScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+          />
+        )}
+
+        {screen === SCREENS.HIGH_FREQUENCY_2 && (
+          <HighFrequencyPart2TopicScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+          />
+        )}
+
         {screen === SCREENS.BEFORE_READING && (
           <BeforeReadingTopicScreen
             muted={muted}
@@ -372,7 +408,16 @@ export default function App() {
   );
 }
 
-function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, onOpenBeforeReading, onOpenReadingScheme }) {
+function LearningTreeScreen({
+  completed,
+  muted,
+  onToggleMute,
+  onOpenPronouns,
+  onOpenHighFrequency,
+  onOpenHighFrequencyPart2,
+  onOpenBeforeReading,
+  onOpenReadingScheme,
+}) {
   const pronounStars = completed.size * 3;
 
   return (
@@ -402,6 +447,30 @@ function LearningTreeScreen({ completed, muted, onToggleMute, onOpenPronouns, on
             status="Ready"
             tone="green"
             onClick={onOpenPronouns}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="🔤"
+            title="High Frequency Words"
+            subtitle="Small words kids see again and again"
+            meta="16 levels · 127 words"
+            status="Ready"
+            tone="green"
+            onClick={onOpenHighFrequency}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="🔠"
+            title="High Frequency Words 2"
+            subtitle="More words to reach the 220 set"
+            meta="12 levels · 96 words"
+            status="Ready"
+            tone="green"
+            onClick={onOpenHighFrequencyPart2}
           />
 
           <div className="path-line" />
@@ -505,6 +574,28 @@ function HomeScreen({
         />
       </div>
     </>
+  );
+}
+
+function HighFrequencyTopicScreen({ muted, onToggleMute, onBackToTree }) {
+  return (
+    <HighFrequencyQuiz
+      muted={muted}
+      sfx={useAudio(muted)}
+      onToggleMute={onToggleMute}
+      onBackToTree={onBackToTree}
+    />
+  );
+}
+
+function HighFrequencyPart2TopicScreen({ muted, onToggleMute, onBackToTree }) {
+  return (
+    <HighFrequencyPart2Quiz
+      muted={muted}
+      sfx={useAudio(muted)}
+      onToggleMute={onToggleMute}
+      onBackToTree={onBackToTree}
+    />
   );
 }
 
