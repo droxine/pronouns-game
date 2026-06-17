@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CORRECT_MESSAGES, TRY_AGAIN_MESSAGES } from "../data/gameContent";
 import { pick, shuffle, shuffleOptions, starsFor } from "../utils/gameUtils";
 import { Confetti } from "./Confetti";
@@ -35,6 +35,13 @@ export function BookQuiz({
   const question = questions[questionIdx] ?? null;
   const mascot = book.mascots?.[activeMascot] ?? { emoji: book.icon, name: "Book" };
   const progress = questions.length ? ((questionIdx + (feedback ? 1 : 0)) / questions.length) * 100 : 0;
+
+  useEffect(() => {
+    collectImagePaths(levels).forEach((path) => {
+      const img = new Image();
+      img.src = imageSrc(path);
+    });
+  }, [levels]);
 
   function launchLevel(nextLevelIdx) {
     const nextLevel = playableLevels[nextLevelIdx];
@@ -387,7 +394,7 @@ function BookGame({
           {question.hint && <div className="hint-box">{question.hint}</div>}
           {question.image && (
             <div className="picture-prompt">
-              <img src={imageSrc(question.image)} alt={question.imageAlt ?? ""} />
+              <img src={imageSrc(question.image)} alt={question.imageAlt ?? ""} loading="eager" decoding="async" />
             </div>
           )}
           {question.prompt && question.target ? (
@@ -616,6 +623,17 @@ function normalize(value) {
 
 function isOrderingQuestion(question) {
   return question?.type === "sequence";
+}
+
+function collectImagePaths(items) {
+  return [
+    ...new Set(
+      items.flatMap((item) => {
+        if (item.levels) return collectImagePaths(item.levels);
+        return item.questions?.map((question) => question.image).filter(Boolean) ?? [];
+      }),
+    ),
+  ];
 }
 
 function highlightTarget(sentence, target, className) {
