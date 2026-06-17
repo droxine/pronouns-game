@@ -1,4 +1,59 @@
+const IMAGES = {
+  gingerbread: "gingerbread-images/gingerbread-man.jpg",
+  fox: "gingerbread-images/fox.jpg",
+  hillRiver: "gingerbread-images/hill-path-river.jpg",
+  gardenRoad: "gingerbread-images/garden-road.jpg",
+  kitchen: "gingerbread-images/kitchen.jpg",
+};
+
 export const GINGERBREAD_LEVELS = [
+  {
+    id: "picture-hunt-1",
+    title: "Picture Hunt 1",
+    emoji: "🖼️",
+    description: "Kitchen words from the story pictures.",
+    keepOrder: true,
+    qCount: 5,
+    questions: [
+      picture(IMAGES.kitchen, "Spanish: ventana", "window", ["window", "door", "table"], "Kitchen words"),
+      picture(IMAGES.kitchen, "Spanish: reloj cucú", "cuckoo clock", ["cuckoo clock", "oven", "window"], "Kitchen words"),
+      picture(IMAGES.kitchen, "Spanish: horno", "oven", ["oven", "door", "table"], "Kitchen words"),
+      picture(IMAGES.kitchen, "Spanish: puerta", "door", ["door", "window", "clock"], "Kitchen words"),
+      picture(IMAGES.kitchen, "Spanish: mesa", "table", ["table", "oven", "window"], "Kitchen words"),
+    ],
+  },
+  {
+    id: "picture-hunt-2",
+    title: "Picture Hunt 2",
+    emoji: "🍪",
+    description: "Gingerbread man and fox words.",
+    keepOrder: true,
+    qCount: 7,
+    questions: [
+      picture(IMAGES.gingerbread, "Spanish: ojo", "eye", ["eye", "mouth", "button"], "Gingerbread man words"),
+      picture(IMAGES.gingerbread, "Spanish: boca", "mouth", ["mouth", "foot", "nose"], "Gingerbread man words"),
+      picture(IMAGES.gingerbread, "Spanish: botón", "button", ["button", "back", "eye"], "Gingerbread man words"),
+      picture(IMAGES.gingerbread, "Spanish: pie", "foot", ["foot", "mouth", "button"], "Gingerbread man words"),
+      picture(IMAGES.fox, "Spanish: zorro", "fox", ["fox", "dog", "cow"], "Fox words"),
+      picture(IMAGES.fox, "Spanish: nariz", "nose", ["nose", "back", "mouth"], "Fox words"),
+      picture(IMAGES.fox, "Spanish: espalda", "back", ["back", "nose", "foot"], "Fox words"),
+    ],
+  },
+  {
+    id: "picture-hunt-3",
+    title: "Picture Hunt 3",
+    emoji: "🗺️",
+    description: "Places from the chase.",
+    keepOrder: true,
+    qCount: 5,
+    questions: [
+      picture(IMAGES.gardenRoad, "Spanish: jardín", "garden", ["garden", "kitchen", "river"], "Place words"),
+      picture(IMAGES.gardenRoad, "Spanish: camino / carretera", "road", ["road", "river", "hill"], "Place words"),
+      picture(IMAGES.hillRiver, "Spanish: colina", "hill", ["hill", "path", "garden"], "Place words"),
+      picture(IMAGES.hillRiver, "Spanish: sendero", "path", ["path", "road", "river"], "Place words"),
+      picture(IMAGES.hillRiver, "Spanish: río", "river", ["river", "hill", "kitchen"], "Place words"),
+    ],
+  },
   {
     id: "vocab",
     title: "Tap the Meaning",
@@ -39,18 +94,18 @@ export const GINGERBREAD_LEVELS = [
     emoji: "🏃",
     description: "Actions and phrases in story sentences.",
     questions: [
-      story("Grandma makes a gingerbread man.", "What does makes mean?", "hace", ["hace", "corre", "abre"], "makes"),
-      story("Grandma gives him a mouth and eyes.", "What does gives mean?", "le da", ["le da", "salta", "nada"], "gives"),
-      story("Grandma puts the gingerbread man in the oven.", "What does puts mean?", "pone", ["pone", "llama", "come"], "puts"),
-      story("Billy opens the window.", "What does opens mean?", "abre", ["abre", "cierra", "corre"], "opens"),
-      story("Grandma takes the gingerbread man out of the oven.", "What does takes out mean?", "saca", ["saca", "entra", "quiere"], "takes"),
-      story("The gingerbread man jumps off the table.", "What does jumps off mean?", "salta de", ["salta de", "duerme en", "mira a"], "jumps off"),
-      story("He runs out of the kitchen.", "What does runs out of mean?", "sale corriendo de", ["sale corriendo de", "entra caminando a", "se sienta en"], "runs out of"),
-      story("Billy runs after the gingerbread man.", "What does runs after mean?", "corre detrás de", ["corre detrás de", "cocina con", "salta sobre"], "runs after"),
-      story("A dog sees them.", "What does sees mean?", "ve", ["ve", "nada", "abre"], "sees"),
-      story("The gingerbread man comes to a river.", "What does comes to mean?", "llega a", ["llega a", "come", "hace"], "comes to"),
-      story("The fox swims across the river.", "What does swims across mean?", "nada cruzando", ["nada cruzando", "corre bajando", "cocina dentro"], "swims across"),
-      story("The fox opens his mouth.", "What does opens mean?", "abre", ["abre", "cierra", "corre"], "opens"),
+      story("Grandma makes a gingerbread man.", "Spanish:", "hace", ["hace", "corre", "abre"], "makes"),
+      story("Grandma gives him a mouth and eyes.", "Spanish:", "le da", ["le da", "salta", "nada"], "gives"),
+      story("Grandma puts the gingerbread man in the oven.", "Spanish:", "pone", ["pone", "llama", "come"], "puts"),
+      story("Billy opens the window.", "Spanish:", "abre", ["abre", "cierra", "corre"], "opens"),
+      story("Grandma takes the gingerbread man out of the oven.", "Spanish:", "saca", ["saca", "entra", "quiere"], "takes"),
+      story("The gingerbread man jumps off the table.", "Spanish:", "salta de", ["salta de", "duerme en", "mira a"], "jumps off"),
+      story("He runs out of the kitchen.", "Spanish:", "sale corriendo de", ["sale corriendo de", "entra caminando a", "se sienta en"], "runs out of"),
+      story("Billy runs after the gingerbread man.", "Spanish:", "corre detrás de", ["corre detrás de", "cocina con", "salta sobre"], "runs after"),
+      story("A dog sees them.", "Spanish:", "ve", ["ve", "nada", "abre"], "sees"),
+      story("The gingerbread man comes to a river.", "Spanish:", "llega a", ["llega a", "come", "hace"], "comes to"),
+      story("The fox swims across the river.", "Spanish:", "nada cruzando", ["nada cruzando", "corre bajando", "cocina dentro"], "swims across"),
+      story("The fox opens his mouth.", "Spanish:", "abre", ["abre", "cierra", "corre"], "opens"),
     ],
   },
   {
@@ -235,6 +290,10 @@ export const GINGERBREAD_LEVELS = [
     ],
   },
 ];
+
+function picture(image, prompt, answer, options, hint) {
+  return { image, imageAlt: hint, prompt, answer, options, hint };
+}
 
 function q(spanish, answer, options) {
   return { prompt: `Tap the English word for "${spanish}".`, question: "Choose the English word.", target: spanish, answer, options };

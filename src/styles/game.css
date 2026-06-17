@@ -1079,6 +1079,24 @@ body {
   color: #1a202c;
 }
 
+.picture-prompt {
+  width: 100%;
+  margin: 0 auto 16px;
+  border: 2px solid #f0e5bd;
+  border-radius: 14px;
+  background: #fffef8;
+  overflow: hidden;
+  box-shadow: 0 3px 0 #e9d99f;
+}
+
+.picture-prompt img {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  background: #fffef8;
+}
+
 .q-blank { color: #1cb0f6; }
 .options { display: flex; flex-direction: column; gap: 10px; }
 

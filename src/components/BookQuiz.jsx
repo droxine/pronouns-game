@@ -385,6 +385,11 @@ function BookGame({
           {level.note && <div className="order-note">{level.note}</div>}
           {question.note && <div className="order-note">{question.note}</div>}
           {question.hint && <div className="hint-box">{question.hint}</div>}
+          {question.image && (
+            <div className="picture-prompt">
+              <img src={imageSrc(question.image)} alt={question.imageAlt ?? ""} />
+            </div>
+          )}
           {question.prompt && question.target ? (
             <>
               <div className={`story-sentence ${book.className}-sentence`}>{highlightTarget(question.prompt, question.target, book.className)}</div>
