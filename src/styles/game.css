@@ -462,11 +462,18 @@ body {
   color: #ff7a00;
 }
 
+.gingerbread-logo,
+.gingerbread-title,
+.gingerbread-level-name {
+  color: #b45309;
+}
+
 .star-hero .mascot-display {
   font-size: 6rem;
 }
 
-.sunwind-hero .mascot-display {
+.sunwind-hero .mascot-display,
+.gingerbread-hero .mascot-display {
   font-size: 6rem;
 }
 
@@ -504,6 +511,27 @@ body {
   color: #a45300;
 }
 
+.gingerbread-book-btn,
+.gingerbread-summary-btn {
+  border-color: #d97706;
+  box-shadow: 0 6px 0 #9a4f00;
+}
+
+.gingerbread-book-btn:hover,
+.gingerbread-summary-btn:hover {
+  box-shadow: 0 8px 0 #9a4f00;
+}
+
+.gingerbread-book-btn:active,
+.gingerbread-summary-btn:active {
+  box-shadow: 0 3px 0 #9a4f00;
+}
+
+.gingerbread-book-btn strong,
+.gingerbread-summary-btn strong {
+  color: #92400e;
+}
+
 .star-sentence {
   border-color: #ffc800;
   box-shadow: 0 4px 0 #cc9f00;
@@ -514,6 +542,11 @@ body {
   box-shadow: 0 4px 0 #cc6f00;
 }
 
+.gingerbread-sentence {
+  border-color: #d97706;
+  box-shadow: 0 4px 0 #9a4f00;
+}
+
 .star-target {
   color: #8a6a00;
   background: #fffcea;
@@ -522,6 +555,11 @@ body {
 .sunwind-target {
   color: #a45300;
   background: #fff4e8;
+}
+
+.gingerbread-target {
+  color: #92400e;
+  background: #fff7ed;
 }
 
 .star-cover {
@@ -536,12 +574,22 @@ body {
   background: linear-gradient(135deg, #ffffff 0%, #fff4e8 100%);
 }
 
+.gingerbread-cover {
+  border-color: #d97706;
+  box-shadow: 0 6px 0 #9a4f00;
+  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
+}
+
 .star-book-section h3 {
   color: #8a6a00;
 }
 
 .sunwind-book-section h3 {
   color: #a45300;
+}
+
+.gingerbread-book-section h3 {
+  color: #92400e;
 }
 
 .turnip-hero .mascot-display {
@@ -642,6 +690,10 @@ body {
   font-size: 0.86rem;
   font-weight: 800;
   margin-top: 2px;
+}
+
+.summary-btn {
+  margin-top: -6px;
 }
 
 .book-scroll {

@@ -171,6 +171,7 @@ export function BookQuiz({
           completed={completed}
           mascot={mascot}
           activeMascot={activeMascot}
+          hasAudio={Boolean(audio)}
           muted={muted}
           onToggleMute={onToggleMute}
           onBackToTree={onBackToTree}
@@ -181,6 +182,10 @@ export function BookQuiz({
           onOpenBook={() => {
             sfx.tap();
             setScreen("book");
+          }}
+          onOpenSummary={() => {
+            sfx.tap();
+            setScreen("summary");
           }}
           onLaunchLevel={(nextLevelIdx) => {
             sfx.tap();
@@ -237,12 +242,22 @@ export function BookQuiz({
           onBack={() => setScreen("home")}
         />
       )}
+
+      {screen === "summary" && (
+        <BookSummary
+          book={book}
+          muted={muted}
+          onToggleMute={onToggleMute}
+          onBack={() => setScreen("home")}
+        />
+      )}
     </>
   );
 }
 
-function BookHome({ book, levelSections, completed, mascot, activeMascot, muted, onToggleMute, onBackToTree, onChooseMascot, onOpenBook, onLaunchLevel }) {
+function BookHome({ book, levelSections, completed, mascot, activeMascot, hasAudio, muted, onToggleMute, onBackToTree, onChooseMascot, onOpenBook, onOpenSummary, onLaunchLevel }) {
   const hasBook = Boolean(book.hasBook);
+  const hasSummary = Boolean(book.summary?.length);
 
   return (
     <>
@@ -267,7 +282,17 @@ function BookHome({ book, levelSections, completed, mascot, activeMascot, muted,
             <span className="open-book-icon">📚</span>
             <span>
               <strong>Open the Book</strong>
-              <small>Read and listen to the story</small>
+              <small>{hasAudio ? "Read and listen to the story" : "Read the full story"}</small>
+            </span>
+          </button>
+        )}
+
+        {hasSummary && (
+          <button className={`open-book-btn summary-btn ${book.className}-summary-btn`} onClick={onOpenSummary}>
+            <span className="open-book-icon">🧾</span>
+            <span>
+              <strong>Story Summary</strong>
+              <small>Read the quick version</small>
             </span>
           </button>
         )}
@@ -491,10 +516,12 @@ function BookReader({ book, audio, sections, muted, onToggleMute, onBack }) {
             <p>{book.author}</p>
           </div>
         </div>
-        <div className="book-audio-card">
-          <div className="book-audio-title"><span>🔊</span><strong>Story audio</strong></div>
-          <audio controls preload="metadata" src={imageSrc(audio)}>Your browser does not support audio.</audio>
-        </div>
+        {audio && (
+          <div className="book-audio-card">
+            <div className="book-audio-title"><span>🔊</span><strong>Story audio</strong></div>
+            <audio controls preload="metadata" src={imageSrc(audio)}>Your browser does not support audio.</audio>
+          </div>
+        )}
         <div className="book-pages">
           {sections.map((section) => (
             <section key={section.id} className={`book-section ${book.className}-book-section`}>
@@ -502,6 +529,36 @@ function BookReader({ book, audio, sections, muted, onToggleMute, onBack }) {
               {section.paragraphs.map((paragraph, index) => <p key={`${section.id}-${index}`}>{paragraph}</p>)}
             </section>
           ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+function BookSummary({ book, muted, onToggleMute, onBack }) {
+  return (
+    <>
+      <div className="topbar">
+        <button className="icon-btn" onClick={onBack}>← Topic</button>
+        <span className={`topbar-logo ${book.className}-logo`}>🧾 Story Summary</span>
+        <div className="topbar-icons">
+          <button className="icon-btn" onClick={onToggleMute}>{muted ? "🔇" : "🔊"}</button>
+        </div>
+      </div>
+      <div className="scroll book-scroll">
+        <div className={`book-cover ${book.className}-cover`}>
+          <div className="book-cover-icon">{book.icon}</div>
+          <div>
+            <div className="book-eyebrow">Quick review</div>
+            <h2>{book.title}</h2>
+            <p>Story summary</p>
+          </div>
+        </div>
+        <div className="book-pages">
+          <section className={`book-section summary-section ${book.className}-book-section`}>
+            <h3><span>🧾</span>Summary</h3>
+            {book.summary.map((paragraph, index) => <p key={`${book.id}-summary-${index}`}>{paragraph}</p>)}
+          </section>
         </div>
       </div>
     </>

@@ -15,4 +15,10 @@ export const STORY_MASCOTS = {
     { id: "sunwind-wind", emoji: "💨", name: "Wind" },
     { id: "sunwind-coat", emoji: "🧥", name: "Coat" },
   ],
+  gingerbread: [
+    { id: "gingerbread-cookie", emoji: "🍪", name: "Gingerbread" },
+    { id: "gingerbread-oven", emoji: "🔥", name: "Oven" },
+    { id: "gingerbread-river", emoji: "🌊", name: "River" },
+    { id: "gingerbread-fox", emoji: "🦊", name: "Fox" },
+  ],
 };

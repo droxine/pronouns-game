@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Confetti } from "./components/Confetti";
 import { BeforeReadingQuiz } from "./components/BeforeReadingQuiz";
 import { GameBody } from "./components/GameBody";
+import { GingerbreadQuiz } from "./components/GingerbreadQuiz";
 import { HighFrequencyPart2Quiz, HighFrequencyQuiz } from "./components/HighFrequencyQuiz";
 import { MascotLibrary } from "./components/MascotLibrary";
 import { ReviewRows } from "./components/ReviewRows";
@@ -37,6 +38,7 @@ const SCREENS = {
   TURNIP: "turnip",
   STAR: "star",
   SUN_WIND: "sun_wind",
+  GINGERBREAD: "gingerbread",
 };
 
 const MODES = {
@@ -80,6 +82,7 @@ export default function App() {
     SCREENS.TURNIP,
     SCREENS.STAR,
     SCREENS.SUN_WIND,
+    SCREENS.GINGERBREAD,
   ].includes(screen);
 
   function launchLevel(nextLevelIdx, gameMode = MODES.SINGLE) {
@@ -377,6 +380,10 @@ export default function App() {
               sfx.tap();
               setScreen(SCREENS.SUN_WIND);
             }}
+            onOpenGingerbread={() => {
+              sfx.tap();
+              setScreen(SCREENS.GINGERBREAD);
+            }}
           />
         )}
 
@@ -398,6 +405,14 @@ export default function App() {
 
         {screen === SCREENS.SUN_WIND && (
           <SunWindTopicScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+          />
+        )}
+
+        {screen === SCREENS.GINGERBREAD && (
+          <GingerbreadTopicScreen
             muted={muted}
             onToggleMute={handleHomeMuteToggle}
             onBackToTree={() => setScreen(SCREENS.TREE)}
@@ -491,7 +506,7 @@ function LearningTreeScreen({
             icon="📚"
             title="Reading Scheme"
             subtitle="Choose a story to practice"
-            meta="3 stories · test mode included"
+            meta="4 stories · test mode included"
             status="Ready"
             tone="yellow"
             onClick={onOpenReadingScheme}
@@ -610,7 +625,7 @@ function BeforeReadingTopicScreen({ muted, onToggleMute, onBackToTree }) {
   );
 }
 
-function ReadingSchemeScreen({ muted, onToggleMute, onBackToTree, onOpenTurnip, onOpenStar, onOpenSunWind }) {
+function ReadingSchemeScreen({ muted, onToggleMute, onBackToTree, onOpenTurnip, onOpenStar, onOpenSunWind, onOpenGingerbread }) {
   return (
     <>
       <div className="topbar tree-topbar">
@@ -666,6 +681,18 @@ function ReadingSchemeScreen({ muted, onToggleMute, onBackToTree, onOpenTurnip, 
             tone="orange"
             onClick={onOpenSunWind}
           />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="🍪"
+            title="The Gingerbread Man"
+            subtitle="Kitchen, chase, river, and summary"
+            meta="2 sections · story practice + test mode"
+            status="Ready"
+            tone="yellow"
+            onClick={onOpenGingerbread}
+          />
         </div>
       </div>
     </>
@@ -697,6 +724,17 @@ function StarTopicScreen({ muted, onToggleMute, onBackToTree }) {
 function SunWindTopicScreen({ muted, onToggleMute, onBackToTree }) {
   return (
     <SunWindQuiz
+      muted={muted}
+      sfx={useAudio(muted)}
+      onToggleMute={onToggleMute}
+      onBackToTree={onBackToTree}
+    />
+  );
+}
+
+function GingerbreadTopicScreen({ muted, onToggleMute, onBackToTree }) {
+  return (
+    <GingerbreadQuiz
       muted={muted}
       sfx={useAudio(muted)}
       onToggleMute={onToggleMute}
