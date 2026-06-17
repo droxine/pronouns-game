@@ -6,6 +6,24 @@ const IMAGES = {
   kitchen: "gingerbread-images/kitchen.jpg",
 };
 
+const VOCAB_IMAGES = {
+  cow: "gingerbread-vocab-images/cow.jpg",
+  horse: "gingerbread-vocab-images/horse.jpg",
+  dog: "gingerbread-vocab-images/dog.jpg",
+  cat: "gingerbread-vocab-images/cat.jpg",
+  hungry: "gingerbread-vocab-images/hungry.jpg",
+  jumpOff: "gingerbread-vocab-images/jump-off.jpg",
+  runUp: "gingerbread-vocab-images/run-up.jpg",
+  runDown: "gingerbread-vocab-images/run-down.jpg",
+  swimAcross: "gingerbread-vocab-images/swim-across.jpg",
+  runAfter: "gingerbread-vocab-images/run-after.jpg",
+  comeIn: "gingerbread-vocab-images/come-in.jpg",
+  putIn: "gingerbread-vocab-images/put-in.jpg",
+  takeOutOf: "gingerbread-vocab-images/take-out-of.jpg",
+  call: "gingerbread-vocab-images/call.jpg",
+  play: "gingerbread-vocab-images/play.jpg",
+};
+
 export const GINGERBREAD_LEVELS = [
   {
     id: "picture-hunt-1",
@@ -52,6 +70,51 @@ export const GINGERBREAD_LEVELS = [
       picture(IMAGES.hillRiver, "Spanish: colina", "hill", ["hill", "path", "garden"], "Place words"),
       picture(IMAGES.hillRiver, "Spanish: sendero", "path", ["path", "road", "river"], "Place words"),
       picture(IMAGES.hillRiver, "Spanish: río", "river", ["river", "hill", "kitchen"], "Place words"),
+    ],
+  },
+  {
+    id: "vocab-cards-1",
+    title: "Vocab Cards 1",
+    emoji: "🐾",
+    description: "End-of-book picture words: animals.",
+    keepOrder: true,
+    qCount: 4,
+    questions: [
+      picture(VOCAB_IMAGES.cow, "Spanish: vaca", "cow", ["cow", "horse", "dog"], "Animal word"),
+      picture(VOCAB_IMAGES.horse, "Spanish: caballo", "horse", ["horse", "cow", "cat"], "Animal word"),
+      picture(VOCAB_IMAGES.dog, "Spanish: perro", "dog", ["dog", "cat", "fox"], "Animal word"),
+      picture(VOCAB_IMAGES.cat, "Spanish: gato", "cat", ["cat", "dog", "cow"], "Animal word"),
+    ],
+  },
+  {
+    id: "vocab-cards-2",
+    title: "Vocab Cards 2",
+    emoji: "🏃",
+    description: "End-of-book picture words: chase actions.",
+    keepOrder: true,
+    qCount: 6,
+    questions: [
+      picture(VOCAB_IMAGES.hungry, "Spanish: hambriento", "hungry", ["hungry", "happy", "fast"], "Story action word"),
+      picture(VOCAB_IMAGES.jumpOff, "Spanish: saltar de", "jump off", ["jump off", "come in", "run after"], "Story action word"),
+      picture(VOCAB_IMAGES.runUp, "Spanish: correr hacia arriba", "run up", ["run up", "run down", "swim across"], "Story action word"),
+      picture(VOCAB_IMAGES.runDown, "Spanish: correr hacia abajo", "run down", ["run down", "run up", "come in"], "Story action word"),
+      picture(VOCAB_IMAGES.swimAcross, "Spanish: nadar cruzando", "swim across", ["swim across", "run after", "jump off"], "Story action word"),
+      picture(VOCAB_IMAGES.runAfter, "Spanish: correr detrás de", "run after", ["run after", "run down", "take out of"], "Story action word"),
+    ],
+  },
+  {
+    id: "vocab-cards-3",
+    title: "Vocab Cards 3",
+    emoji: "🍽️",
+    description: "End-of-book picture words: kitchen actions.",
+    keepOrder: true,
+    qCount: 5,
+    questions: [
+      picture(VOCAB_IMAGES.comeIn, "Spanish: entrar", "come in", ["come in", "call", "play"], "Story action word"),
+      picture(VOCAB_IMAGES.putIn, "Spanish: meter / poner dentro", "put in", ["put in", "take out of", "jump off"], "Story action word"),
+      picture(VOCAB_IMAGES.takeOutOf, "Spanish: sacar de", "take out of", ["take out of", "put in", "run up"], "Story action word"),
+      picture(VOCAB_IMAGES.call, "Spanish: llamar", "call", ["call", "play", "come in"], "Story action word"),
+      picture(VOCAB_IMAGES.play, "Spanish: jugar", "play", ["play", "call", "swim across"], "Story action word"),
     ],
   },
   {
