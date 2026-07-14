@@ -468,6 +468,12 @@ body {
   color: #b45309;
 }
 
+.action-verbs-logo,
+.action-verbs-title,
+.action-verbs-level-name {
+  color: #0a83bd;
+}
+
 .star-hero .mascot-display {
   font-size: 6rem;
 }

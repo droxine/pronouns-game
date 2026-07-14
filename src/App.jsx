@@ -3,7 +3,7 @@ import { Confetti } from "./components/Confetti";
 import { BeforeReadingQuiz } from "./components/BeforeReadingQuiz";
 import { GameBody } from "./components/GameBody";
 import { GingerbreadQuiz } from "./components/GingerbreadQuiz";
-import { HighFrequencyPart2Quiz, HighFrequencyQuiz } from "./components/HighFrequencyQuiz";
+import { ActionVerbsQuiz, HighFrequencyPart2Quiz, HighFrequencyQuiz } from "./components/HighFrequencyQuiz";
 import { MascotLibrary } from "./components/MascotLibrary";
 import { ReviewRows } from "./components/ReviewRows";
 import { SidePanel } from "./components/SidePanel";
@@ -31,8 +31,10 @@ const SCREENS = {
   GAME: "game",
   REVIEW: "review",
   FINAL: "final",
+  FOUNDATIONS: "foundations",
   HIGH_FREQUENCY: "high_frequency",
   HIGH_FREQUENCY_2: "high_frequency_2",
+  ACTION_VERBS: "action_verbs",
   BEFORE_READING: "before_reading",
   READING_SCHEME: "reading_scheme",
   TURNIP: "turnip",
@@ -75,8 +77,10 @@ export default function App() {
   const progress = questions.length ? ((questionIdx + (answeredCurrentQuestion ? 1 : 0)) / questions.length) * 100 : 0;
   const showSidePanel = ![
     SCREENS.TREE,
+    SCREENS.FOUNDATIONS,
     SCREENS.HIGH_FREQUENCY,
     SCREENS.HIGH_FREQUENCY_2,
+    SCREENS.ACTION_VERBS,
     SCREENS.BEFORE_READING,
     SCREENS.READING_SCHEME,
     SCREENS.TURNIP,
@@ -241,13 +245,9 @@ export default function App() {
               sfx.tap();
               setScreen(SCREENS.HOME);
             }}
-            onOpenHighFrequency={() => {
+            onOpenFoundations={() => {
               sfx.tap();
-              setScreen(SCREENS.HIGH_FREQUENCY);
-            }}
-            onOpenHighFrequencyPart2={() => {
-              sfx.tap();
-              setScreen(SCREENS.HIGH_FREQUENCY_2);
+              setScreen(SCREENS.FOUNDATIONS);
             }}
             onOpenBeforeReading={() => {
               sfx.tap();
@@ -339,11 +339,39 @@ export default function App() {
           />
         )}
 
+        {screen === SCREENS.FOUNDATIONS && (
+          <FoundationsScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.TREE)}
+            onOpenHighFrequency={() => {
+              sfx.tap();
+              setScreen(SCREENS.HIGH_FREQUENCY);
+            }}
+            onOpenHighFrequencyPart2={() => {
+              sfx.tap();
+              setScreen(SCREENS.HIGH_FREQUENCY_2);
+            }}
+            onOpenActionVerbs={() => {
+              sfx.tap();
+              setScreen(SCREENS.ACTION_VERBS);
+            }}
+          />
+        )}
+
         {screen === SCREENS.HIGH_FREQUENCY && (
           <HighFrequencyTopicScreen
             muted={muted}
             onToggleMute={handleHomeMuteToggle}
-            onBackToTree={() => setScreen(SCREENS.TREE)}
+            onBackToTree={() => setScreen(SCREENS.FOUNDATIONS)}
+          />
+        )}
+
+        {screen === SCREENS.ACTION_VERBS && (
+          <ActionVerbsTopicScreen
+            muted={muted}
+            onToggleMute={handleHomeMuteToggle}
+            onBackToTree={() => setScreen(SCREENS.FOUNDATIONS)}
           />
         )}
 
@@ -351,7 +379,7 @@ export default function App() {
           <HighFrequencyPart2TopicScreen
             muted={muted}
             onToggleMute={handleHomeMuteToggle}
-            onBackToTree={() => setScreen(SCREENS.TREE)}
+            onBackToTree={() => setScreen(SCREENS.FOUNDATIONS)}
           />
         )}
 
@@ -428,8 +456,7 @@ function LearningTreeScreen({
   muted,
   onToggleMute,
   onOpenPronouns,
-  onOpenHighFrequency,
-  onOpenHighFrequencyPart2,
+  onOpenFoundations,
   onOpenBeforeReading,
   onOpenReadingScheme,
 }) {
@@ -468,24 +495,12 @@ function LearningTreeScreen({
 
           <TopicNode
             icon="🔤"
-            title="High Frequency Words"
-            subtitle="Small words kids see again and again"
-            meta="16 levels · 127 words"
+            title="Foundations"
+            subtitle="Core words and daily action verbs"
+            meta="3 activities · words, routines, verbs"
             status="Ready"
             tone="green"
-            onClick={onOpenHighFrequency}
-          />
-
-          <div className="path-line" />
-
-          <TopicNode
-            icon="🔠"
-            title="High Frequency Words 2"
-            subtitle="More words to reach the 220 set"
-            meta="12 levels · 96 words"
-            status="Ready"
-            tone="green"
-            onClick={onOpenHighFrequencyPart2}
+            onClick={onOpenFoundations}
           />
 
           <div className="path-line" />
@@ -528,6 +543,75 @@ function TopicNode({ icon, title, subtitle, meta, status, tone, onClick }) {
       </span>
       <span className="topic-status">{status}</span>
     </button>
+  );
+}
+
+function FoundationsScreen({
+  muted,
+  onToggleMute,
+  onBackToTree,
+  onOpenHighFrequency,
+  onOpenHighFrequencyPart2,
+  onOpenActionVerbs,
+}) {
+  return (
+    <>
+      <div className="topbar tree-topbar">
+        <button className="icon-btn" onClick={onBackToTree}>
+          ← Tree
+        </button>
+        <span className="topbar-logo">🔤 Foundations</span>
+        <div className="topbar-icons">
+          <button className="icon-btn" onClick={onToggleMute}>
+            {muted ? "🔇" : "🔊"}
+          </button>
+        </div>
+      </div>
+
+      <div className="scroll tree-scroll">
+        <div className="tree-header">
+          <div className="tree-kicker">basic English tools</div>
+          <h1>Foundations</h1>
+          <p>Practice the words and routine actions that make reading easier.</p>
+        </div>
+
+        <div className="topic-path">
+          <TopicNode
+            icon="🔤"
+            title="High Frequency Words"
+            subtitle="Small words kids see again and again"
+            meta="16 levels · 127 words"
+            status="Ready"
+            tone="green"
+            onClick={onOpenHighFrequency}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="🔠"
+            title="High Frequency Words 2"
+            subtitle="More words to reach the 220 set"
+            meta="12 levels · 96 words"
+            status="Ready"
+            tone="green"
+            onClick={onOpenHighFrequencyPart2}
+          />
+
+          <div className="path-line" />
+
+          <TopicNode
+            icon="🏃"
+            title="Action Verbs List"
+            subtitle="Daily routine phrases"
+            meta="6 levels · 15 routine verbs"
+            status="Ready"
+            tone="blue"
+            onClick={onOpenActionVerbs}
+          />
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -606,6 +690,17 @@ function HighFrequencyTopicScreen({ muted, onToggleMute, onBackToTree }) {
 function HighFrequencyPart2TopicScreen({ muted, onToggleMute, onBackToTree }) {
   return (
     <HighFrequencyPart2Quiz
+      muted={muted}
+      sfx={useAudio(muted)}
+      onToggleMute={onToggleMute}
+      onBackToTree={onBackToTree}
+    />
+  );
+}
+
+function ActionVerbsTopicScreen({ muted, onToggleMute, onBackToTree }) {
+  return (
+    <ActionVerbsQuiz
       muted={muted}
       sfx={useAudio(muted)}
       onToggleMute={onToggleMute}

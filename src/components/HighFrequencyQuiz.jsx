@@ -1,4 +1,5 @@
 import { BookQuiz } from "./BookQuiz";
+import { ACTION_VERBS_LEVELS } from "../data/actionVerbsContent";
 import { HIGH_FREQUENCY_LEVELS } from "../data/highFrequencyContent";
 import { HIGH_FREQUENCY_PART_2_LEVELS } from "../data/highFrequencyContentPart2";
 
@@ -36,12 +37,43 @@ const HIGH_FREQUENCY_PART_2_BOOK = {
   ],
 };
 
+const ACTION_VERBS_BOOK = {
+  ...HIGH_FREQUENCY_BOOK,
+  id: "action-verbs",
+  title: "Action Verbs List",
+  icon: "🏃",
+  subtitle: "Daily routines · school actions · home actions",
+  className: "action-verbs",
+  color: "#1cb0f6",
+  shadow: "#0a90d0",
+  practiceSectionId: "routine-practice",
+  practiceSectionTitle: "Routine Practice",
+  practiceSectionEmoji: "🏃",
+  practiceSectionDescription: "Practice routine verbs from the class list.",
+  mascots: [
+    { id: "runner", emoji: "🏃", name: "Runner" },
+    { id: "school-bag", emoji: "🎒", name: "School" },
+    { id: "water", emoji: "💧", name: "Water" },
+  ],
+};
+
 export function HighFrequencyQuiz(props) {
   return (
     <BookQuiz
       {...props}
       book={HIGH_FREQUENCY_BOOK}
       levels={HIGH_FREQUENCY_LEVELS}
+      bookSections={[]}
+    />
+  );
+}
+
+export function ActionVerbsQuiz(props) {
+  return (
+    <BookQuiz
+      {...props}
+      book={ACTION_VERBS_BOOK}
+      levels={ACTION_VERBS_LEVELS}
       bookSections={[]}
     />
   );
